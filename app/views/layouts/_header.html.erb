@@ -34,16 +34,16 @@
 <!--管理者がログインしているとき-->
               <% elsif admin_signed_in? %>
                 <li>
-                  <%= link_to '商品一覧', admin_items_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                  
                 </li>
                 <li>
-                  <%= link_to '会員一覧', admin_user_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                  <%= link_to '会員一覧', admin_users_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
                 </li>
                 <li>
-                  <%= link_to '注文履歴一覧', admin_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                  <%= link_to '本カテゴリ一覧', admin_categories_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
                 </li>
                 <li>
-                  <%= link_to 'ジャンル一覧', admin_genres_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                  
                 </li>
                 <li>
                   <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
@@ -60,9 +60,13 @@
                 </li>
                 <li>
                   <%= link_to 'ログイン', user_session_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                </li>
+                <li>
+                  <%= link_to '管理者ログイン', admin_session_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                </li>
               <% end %>
             </ul>
-          </div>
+          </div>admin_session
         </div>
       </div>
     </nav>

@@ -1,2 +1,19 @@
-<h1>Admin::Categories#edit</h1>
-<p>Find me in app/views/admin/categories/edit.html.erb</p>
+<div class="container">
+  <div class="row">
+    <h5 class='mx-5 my-5', style="background-color: #eee; width:220px; padding-left: 12px; margin-bottom: 40px;">
+      <b>カテゴリ編集</b>
+    </h5>
+  </div>
+  <div>
+    <%= render "admin/shared/error_messages", resource: @category %>
+    <%= form_with model: @category, url: admin_category_path(@category.id) do |f| %>
+      <div class="form-inline">
+        <span class="mr-3"><b><%= f.label :name, 'カテゴリ名' %></b></span>
+        <span class="mr-3"><%= f.text_field :name, placeholder: "カテゴリ名", class: 'form-control' %></span>
+        <span class="mr-2"><%= f.submit '変更を保存',class: 'btn btn-success' %></span>
+        <span class="mr-2"><%= link_to '削除する', admin_category_path(@category.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger"%></span>
+      </div>
+    <% end %>
+  </div>
+</div>
+Footer

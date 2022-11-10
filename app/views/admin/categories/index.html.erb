@@ -1,2 +1,35 @@
-<h1>Admin::Categories#index</h1>
-<p>Find me in app/views/admin/categories/index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <h5 class='mx-5 my-5', style="background-color: #eee; width:220px; padding-left: 12px; margin-bottom: 40px;">
+      <b>カテゴリ一覧/追加</b>
+    </h5>
+  </div>
+  <div class="row">
+    <%= render "admin/shared/error_messages", resource: @category %>
+    <%= form_with model: @category, url:admin_categories_path do |f| %>
+      <div class="form-inline">
+        <span class="mr-3"><b><%= f.label :name, '追加するカテゴリ名' %></b></span>
+        <span class="mr-3"><%= f.text_field :name, placeholder: "カテゴリ名", class: 'form-control' %></span>
+        <span class="mr-3"><%= f.submit '新規登録', class: 'btn btn-success' %></span>
+      </div>
+    <% end %>
+  </div>
+  <div class="row mt-5">
+    <div class="col-7">
+      <table class='table'>
+        <thead style="background-color: #eee;">
+          <th class="text-center">カテゴリ名</th>
+          <th></th>
+        </thead>
+        <% @categories.each do |category| %>
+        <tbody>
+          <tr>
+            <td><%= category.name %></td>
+            <td class="d-flex justify-content-end"><%= link_to "編集する", edit_admin_category_path(category.id), class: "btn btn-success" %></td>
+          </tr>
+        </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

@@ -17,18 +17,17 @@ Rails.application.routes.draw do
       resources :post_comments,only:[:destroy]
     end
   
-  # ユーザ用
-  # URL /customers/sign_in ...
+# ユーザ用
+# URL /customers/sign_in ...
   devise_for :users,skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-  
     scope module: :public do
       root to:"homes#top"
       get '/about' => 'homes#about', as: "about"
-      get 'users/unsubscribe'
-      patch 'users/withdrow'
+      get "users/confirm"
+      patch 'users/withdraw'
       get 'users/my_page' => 'users#show', as: 'my_page'
       resources :users, only: [:show, :edit, :update, :update]do
         resource :relationships, only: [:create,:destroy]
@@ -47,10 +46,10 @@ Rails.application.routes.draw do
       end
     end
   
-  # ゲストログイン機能実装
+# ゲストログイン機能実装
     devise_scope :user do
       post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
     end
   
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
