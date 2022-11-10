@@ -7,9 +7,8 @@ Rails.application.routes.draw do
   }
     namespace :admin do
       get '/' =>'homes#top'
-      get 'books/search'
       get 'books/search_api'
-      
+      get get "search" => "searches#search"
       resources :users, only:[:index, :edit, :create, :update, :destroy]
       resources :books, only:[:show, :edit, :create, :update, :destroy]
       resources :categories, only:[:index, :edit, :create, :update, :destroy]
@@ -28,7 +27,6 @@ Rails.application.routes.draw do
       get '/about' => 'homes#about', as: "about"
       get "users/confirm"
       patch 'users/withdraw'
-      get 'users/my_page' => 'users#show', as: 'my_page'
       resources :users, only: [:show, :edit, :update, :update]do
         resource :relationships, only: [:create,:destroy]
         get :followings, on: :member

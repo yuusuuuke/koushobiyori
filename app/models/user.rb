@@ -5,20 +5,17 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
          
   validates :nickname, presence: true, length: { minimum: 2, maximum: 30 }
-  validates :introduction, length: {maximum: 100}
-  
+  validates :introduction, length: { maximum: 100}
   has_one_attached :profile_image
   
   def get_profile_image(weight,height)
-    unless self.profile_image.attached?
+    unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
     profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image_jpeg')
     end
-    self.profile_image.variant(resize_to_fill: [weight, height]).processed
+    profile_image.variant(resize_to_fill: [weight, height]).processed
   end
   
-         
-  has_many :books, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :post_comments, dependent: :destroy
@@ -42,6 +39,15 @@ class User < ApplicationRecord
 #フォローしているかの判定
   def following?(user)
     followings.include?(user)
+  end
+  
+# 検索機能
+  def self.looks(search, word)
+    if search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
   end
   
 # ゲストログイン機能
