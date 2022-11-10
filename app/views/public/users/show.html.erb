@@ -1,0 +1,21 @@
+<h1>Public::Users#show</h1>
+
+<!--サイドバー-->
+  <div class="info">
+    <tr>
+      <td><%= image_tag @user.get_profile_image(100,100) %></td>
+    </tr>
+    <tr>
+  	  <th>ニックネーム</th>
+  	  <th><%= @user.nickname %></th>
+    </tr>
+    <tr>
+  	  <th>introduction</th>
+  	  <th><%= @user.introduction %></th>
+  	</tr>
+  </div>
+  <div class='row'>
+    <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
+      <i class="fas fa-user-cog"></i>
+    <% end %>
+  </div>
