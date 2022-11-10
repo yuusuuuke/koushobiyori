@@ -1,2 +1,40 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <h5 class="ml-5 my-4 px-3", style="background-color: #eee; width:350px;">
+      <b><%= @user.nickname %>さんの会員情報編集画面</b>
+    </h5>
+  </div>
+  <div class="row">
+    <%= render "admin/shared/error_messages", resource: @user %>
+    <%= form_with model: @user, url:admin_user_path(@user) do |f| %>
+      <table class='table table-borderless'>
+        <tr>
+          <td>会員ID</td>
+          <td><%= @user.id %></td>
+        </tr>
+        <tr>
+          <td>画像</td>
+          <td><%= image_tag @user.get_profile_image(100,100) %></td>
+        </tr>
+        <tr>
+          <td>ニックネーム</td>
+          <td><%= f.text_field :nickname%></td>
+        </tr>
+          <td>メールアドレス</td>
+          <td><%= f.text_field :email %></td>
+        </tr>
+        <tr>
+          <td>会員ステータス</td>
+          <td>
+            <%= f.radio_button :is_active, :true %><%= f.label :is_active, "有効" %>
+            <%= f.radio_button :is_active, :false %><%= f.label :is_active, "退会" %>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><b><%= f.submit '変更を保存',class: 'btn btn-success' %></b></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>

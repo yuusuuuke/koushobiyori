@@ -52,12 +52,6 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "book_categories", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "books", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
@@ -65,6 +59,12 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
     t.bigint "isbm"
     t.string "item_url"
     t.string "item_image_url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
     t.datetime "remember_created_at"
     t.string "nickname", null: false
     t.text "introduction"
+    t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
