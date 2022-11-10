@@ -1,0 +1,36 @@
+<table class = "table table-hover table-inverse">
+  <!--検索対象モデルによって表示内容変わるので、条件分岐必要-->
+  <% if @range == "User" %>
+    <tbody>
+      <% @users. each do |user| %>
+        <h2>Users search for user.word </h2>
+        <tr>
+          <th></th>
+          <th>ニックネーム</th>
+          <th>自己紹介文</th>
+        </tr>
+        <tr>
+          <td><%= image_tag user.get_profile_image(50,50) %></td>
+          <td><%= user.nickname %></td>
+          <td><%= user.introduction %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% elsif @range == "Book" %>
+    <h2>Books search for user.word</h2>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <th>画像</th>
+          <th>タイトル</th>
+          <th>著者</th>
+        </tr>
+        <tr>
+          <td><%= book.item_image_url(50,50) %></td>
+          <td><%= book.title %></td>
+          <td><%= book.author %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

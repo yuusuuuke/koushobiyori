@@ -1,4 +1,4 @@
-class PostComment < ApplicationRecord
+class Comment < ApplicationRecord
   
   validates :comment,presence:true,length:{ maximum:200 }
   

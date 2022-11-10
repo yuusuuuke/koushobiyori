@@ -53,10 +53,11 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "read_status_id"
+    t.integer "category_id"
     t.string "title"
     t.string "author"
-    t.bigint "isbm"
+    t.bigint "isbn"
     t.string "item_url"
     t.string "item_image_url"
     t.datetime "created_at", precision: 6, null: false
@@ -64,7 +65,15 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "review_id"
+    t.integer "user_id"
+    t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -76,16 +85,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "post_comments", force: :cascade do |t|
-    t.integer "review_id"
-    t.integer "user_id"
-    t.text "comment", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "read_statuses", force: :cascade do |t|
-    t.integer "book_id"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

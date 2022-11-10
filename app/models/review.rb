@@ -4,7 +4,7 @@ class Review < ApplicationRecord
   
   belongs_to :user
   belongs_to :book
-  has_many :post_coments, dependent: :destroy
+  has_many :coments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   
 end
