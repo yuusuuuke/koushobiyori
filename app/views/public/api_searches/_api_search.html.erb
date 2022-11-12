@@ -1,0 +1,10 @@
+<div class = "d-flex align-items-center justify-content-center mt-5 mb-5" >
+  <% if user_signed_in? %>
+    <div class = api_search_form >
+      <%= form_tag api_search_path, method: :get do %>
+        <%= text_field_tag :title, @title %>
+        <%= button_tag "追加する本を探す" %>
+      <% end %>
+    </div>
+  <% end %> 
+</div>

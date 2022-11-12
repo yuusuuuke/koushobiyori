@@ -1,8 +1,6 @@
 class ReadStatus < ApplicationRecord
   
-  validates :status
-  
   has_many :books
-  enum status: { read: 0, reading: 1, wish: 2 }
+  enum status: { no_status: 0, read: 1, reading: 2, wish: 3 }
   
 end

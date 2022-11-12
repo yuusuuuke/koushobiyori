@@ -1,0 +1,18 @@
+<table class = "table table-hover table-inverse">
+  <h2>検索結果</h2>
+  <% unless @books.blank? %>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.item_image_url(100,140) %></td>
+          <td><%= book.title %></td>
+          <td><%= book.author %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <b>検索された本はまだ登録されていません。</b><br>
+    <b>こちらから検索して、本を登録してください。</b>
+    <%= render "public/api_searches/api_search"%>
+  <% end %>
+</table>
