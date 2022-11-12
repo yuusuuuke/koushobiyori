@@ -10,6 +10,8 @@
       <div class="form-inline">
         <span class="mr-3"><b><%= f.label :name, '追加するカテゴリ名' %></b></span>
         <span class="mr-3"><%= f.text_field :name, placeholder: "カテゴリ名", class: 'form-control' %></span>
+        <span class="mr-3"><b><%= f.label :genre_code, '追加するジャンルコード' %></b></span>
+        <span class="mr-3"><%= f.text_field :genre_code, placeholder: "ジャンルコード", class: 'form-control' %></span>
         <span class="mr-3"><%= f.submit '新規登録', class: 'btn btn-success' %></span>
       </div>
     <% end %>
@@ -19,12 +21,14 @@
       <table class='table'>
         <thead style="background-color: #eee;">
           <th class="text-center">カテゴリ名</th>
+          <th class="text-center">ジャンルID</th>
           <th></th>
         </thead>
         <% @categories.each do |category| %>
         <tbody>
           <tr>
             <td><%= category.name %></td>
+            <td><%= category.genre_code %></td>
             <td class="d-flex justify-content-end"><%= link_to "編集する", edit_admin_category_path(category.id), class: "btn btn-success" %></td>
           </tr>
         </tbody>

@@ -8,7 +8,7 @@ class CreateBooks < ActiveRecord::Migration[6.1]
       t.bigint :isbn
       t.string :item_url
       t.string :item_image_url
-
+      t.string :genre_name
       t.timestamps
     end
   end

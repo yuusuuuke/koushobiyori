@@ -10,6 +10,8 @@
       <div class="form-inline">
         <span class="mr-3"><b><%= f.label :name, 'カテゴリ名' %></b></span>
         <span class="mr-3"><%= f.text_field :name, placeholder: "カテゴリ名", class: 'form-control' %></span>
+        <span class="mr-3"><b><%= f.label :genre_code, 'ジャンルコード' %></b></span>
+        <span class="mr-3"><%= f.text_field :genre_code, placeholder: "ジャンルコード", class: 'form-control' %></span>
         <span class="mr-2"><%= f.submit '変更を保存',class: 'btn btn-success' %></span>
         <span class="mr-2"><%= link_to '削除する', admin_category_path(@category.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger"%></span>
       </div>

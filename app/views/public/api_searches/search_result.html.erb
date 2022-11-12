@@ -1,0 +1,17 @@
+<!--検索結果を表示-->
+<% if @books %>
+  <% @books.each do |book| %>
+<!--ご自身が表示させたいデータを記載してください。-->
+<!--以下のコードではは画像、タイトル、著者名、商品の説明を表示させています。-->
+    <div style="flex-direction: row;">
+      <div class="book_date">
+        <%= link_to api_book_create_path(isbn: book.isbn), method: :post do%>
+          <%= image_tag book.item_image_url, size: "100x140"%><br>
+          <%= book.title %><br>
+          <%= book.author %>
+        <% end %>
+      </div>
+    </div>
+    <!--<%#= book.item_caption %>  -->
+  <% end %>
+<% end %>
