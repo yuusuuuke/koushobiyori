@@ -1,4 +1,5 @@
 class Public::ApiSearchesController < ApplicationController
+  before_action :authenticate_user!
   def search_result
 #ここで空の配列を作ります
     @books = []
@@ -30,26 +31,26 @@ class Public::ApiSearchesController < ApplicationController
   private
 #「楽天APIのデータから必要なデータを絞り込む」、且つ「対応するカラムにデータを格納する」メソッドを設定していきます。
   def read(result)
-    title = result["title"]
-    author = result["author"]
-    item_url = result["itemUrl"]
-    isbn = result["isbn"]
-    item_image_url = result["mediumImageUrl"].gsub('?_ex=120x120', '')
-    genre_name = result["booksGenreId"].slice!(0..5).to_i
-    category = Category.find_by(genre_code: genre_name)
+    genre_code = result["booksGenreId"].slice!(0..5)
+    category = Category.find_by(genre_code: genre_code)
     {
-      title: title,
-      author: author,
-      item_url: item_url,
-      isbn: isbn,
-      item_image_url: item_image_url,
-      genre_name: genre_name,
-      # read_status: 0
+    title: result["title"],
+    author: result["author"],
+    item_url: result["itemUrl"],
+    isbn: result["isbn"],
+    item_image_url: result["mediumImageUrl"].gsub('?_ex=120x120', ''),
+    category_id: category&.id
+#genre_nameとcategoryモデル内のgenre_codeと同じNo.を紐付け
+#find_byでcategoryモデル内のgenre_codeのレコード情報取得。値はcategory変数に入ってる
+    
+#左:Bookモデルのカラム名,右:上で指定したカラム名
+# 直接上に
+
     }
   end
   
-  def book_params
-    params.require(:book).permit(:title)
-  end
+  # def book_params
+  #   params.require(:book).permit(:title)
+  # end
     
 end

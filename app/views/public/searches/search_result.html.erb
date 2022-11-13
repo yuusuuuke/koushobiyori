@@ -4,9 +4,13 @@
     <tbody>
       <% @books.each do |book| %>
         <tr>
-          <td><%= book.item_image_url(100,140) %></td>
-          <td><%= book.title %></td>
-          <td><%= book.author %></td>
+          <td>
+            <%= link_to book_path(book), method: :get do%>
+      　  　    <%= image_tag book.item_image_url, size: "100x140" %><br>
+        　  　  <%= book.title %><br>
+          　　  <%= book.author %>
+        　　  <% end %>
+        　</td>
         </tr>
       <% end %>
     </tbody>

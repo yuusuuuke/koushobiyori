@@ -2,8 +2,8 @@ class Book < ApplicationRecord
   
   validates :title, presence: true
   
-  belongs_to :category
-  belongs_to :read_status
+  belongs_to :category,optional: true
+  belongs_to :read_status, foreign_key: 'read_status_id'
   has_many :reviews, dependent: :destroy
   
 # 検索機能

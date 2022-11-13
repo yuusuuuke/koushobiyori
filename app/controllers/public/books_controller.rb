@@ -3,11 +3,9 @@ class Public::BooksController < ApplicationController
   end
 
   def show
+    @book = Book.find(params[:id])
+    @review = Review.new
   end
 
-  def search
-  end
 
-  def search_api
-  end
 end
