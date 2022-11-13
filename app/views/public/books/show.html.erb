@@ -11,13 +11,18 @@
   <P>読んでみたい</P>
 </div>
 
+<% unless @reviews.where(user_id: current_user.id, book_id: @book.id).present?%>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#review_form">
+    レビューを投稿
+  </button>
+<% else %>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#review_edit">
+    レビューを編集
+  </button>
+<% end %>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  レビューを投稿する
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal/review_form-->
+<div class="modal fade" id="review_form" tabindex="-1" role="dialog" aria-labelledby="review_formLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,19 +31,58 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      
       <%= form_with model:[@book, @review], url: book_reviews_path(@book), method: :post, remote: true do |f| %>
         <div class="modal-body">
           <div class="form_group">
-            <%= f.label :comment %>
             <%= f.text_area :comment, class: "form_control"%>
           </div>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-        <%= f.submit "投稿する", class: "btn btn-primary"%>
-          </div>
+          <%= f.submit "投稿", class: "btn btn-primary"%>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
+<!-- end
+Modal/review_form-->
+
+<!-- Modal/review_edit-->
+<div class="modal fade" id="review_edit" tabindex="-1" role="dialog" aria-labelledby="review_editLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">レビュー編集フォーム</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <%= form_with model:@rreview, url: book_review_path(@book), method: :patch, remote: true do |f| %>
+        <div class="modal-body">
+          <div class="form_group">
+            <%= f.text_area :comment, class: "form_control"%>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "更新", class: "btn btn-primary"%>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- end
+Modal/review_edit-->
+
+
+<% @book.reviews.each do |review|%>
+<div class="card mb-1">
+    <div class="card-body">
+<%= image_tag review.user.get_profile_image(60,60) %>
+<%= review.user.nickname %>
+<%= review.comment%>
+<%= l review.created_at %>
+</div>
+</div>
+<% end %>

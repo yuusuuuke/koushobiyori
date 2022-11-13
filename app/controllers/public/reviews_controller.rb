@@ -9,6 +9,12 @@ class Public::ReviewsController < ApplicationController
     redirect_to request.referrer
   end  
   
+  def update
+    review = Review.find(params[:id])
+    review.update(review_params)
+    redirect_to request.referrer
+  end  
+  
   
   private
   def review_params
