@@ -10,15 +10,27 @@ class Public::ReviewsController < ApplicationController
   end  
   
   def update
-    review = Review.find(params[:id])
+    # byebug
+    book = Book.find(params[:book_id])
+    review = book.reviews.find_by(params[:book_id],[:user_id])
     review.update(review_params)
     redirect_to request.referrer
-  end  
+  end
   
+  def destroy
+    book = Book.find(params[:book_id])
+    review = book.reviews.find_by(params[:book_id],[:user_id])
+    if review.user_id != current_user.id
+      render :show
+    else
+      review.delete
+      redirect_to request.referrer
+    end
+  end
   
   private
   def review_params
-    params.require(:review).permit(:comment) 
+    params.require(:review).permit(:comment)
   end
   
 end

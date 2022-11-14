@@ -1,7 +1,6 @@
-<h1>Public::Users#show</h1>
-
 <!--サイドバー-->
   <div class="info">
+  <table>
     <tr>
       <td><%= image_tag @user.get_profile_image(100,100) %></td>
     </tr>
@@ -13,9 +12,42 @@
   	  <th>introduction</th>
   	  <th><%= @user.introduction %></th>
   	</tr>
+  	<tr>
+  	  <th>
+  	    <%= link_to followings_user_path(@user.id) do%>
+	        フォロー:<%= @user.relationships.count %>
+	      <% end %>
+	    </th>
+  	</tr>
+  	<tr>
+  	  <th>
+  	    <%= link_to followers_user_path(@user.id) do %>
+	        フォロワー:<%= @user.reverse_of_relationships.count %>
+	      <% end %>
+	    </th>
+	  </tr>
+	   <tr>
+     <th>
+     <% unless @user == current_user %>
+       <% if current_user.following?(@user) %>
+        <%= link_to user_relationships_path(@user), method: :delete do %>
+          <button class="btn btn-danger btn-sm">フォローを外す</button>
+        <% end %>
+       <% else %>
+        <%= link_to user_relationships_path(@user), method: :post do%>
+          <button class="btn btn-primary btn-sm">フォロー</button> 
+        <% end %>
+       <% end %>
+      <% end %>
+      </th>
+   </tr>
+</table>
+	  
   </div>
   <div class='row'>
+    <% if @user == current_user %>　
     <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
       <i class="fas fa-user-cog"></i>
+    <% end %>
     <% end %>
   </div>

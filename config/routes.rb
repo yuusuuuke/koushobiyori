@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :books, only:[:show, :edit, :create, :update, :destroy]
       resources :categories, only:[:index, :edit, :create, :update, :destroy]
       resources :reviews, only:[:destroy]
-      resources :post_comments,only:[:destroy]
+      resources :comments,only:[:destroy]
     end
   
 # ユーザ用
@@ -34,11 +34,10 @@ Rails.application.routes.draw do
         get :followers, on: :member
       end
       
-      
+      resources:comments,only:[:create,:destroy]
       resources :books, only: [:index,:show,:edit,:create,:destroy,:update]do
-        resources :reviews, only: [:edit,:create,:update,:destroy]do
+        resources :reviews, only: [:create,:update,:destroy]do
           resource:favorites,only: [:create,:destroy]
-          resources:post_comments,only:[:create,:destroy]
         end
       end
     end
