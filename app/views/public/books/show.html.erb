@@ -58,7 +58,7 @@ Modal/review_form-->
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <%= form_with model:@review_edit, url: book_review_path(@book), method: :patch, remote: true do |f| %>
+        <%= form_with model:@user_review, url: book_review_path(@book), method: :patch, remote: true do |f| %>
         <div class="modal-body">
           <div class="form_group">
             <%= f.text_area :comment, size:"50x5", class: "form_control"%>
@@ -66,7 +66,7 @@ Modal/review_form-->
         </div>
         <div class="modal-footer">
           <%= f.submit "更新", class: "btn btn-primary"%>
-          <%= link_to "レビュー削除", book_review_path(@book), method: :delete, class:"btn btn-danger"%>
+          <%= link_to "レビュー削除", book_review_path(@book), method: :delete, class:"btn btn-danger", data: {confirm: "本当に削除しますか？"} %>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
         </div>
       <% end %>
@@ -75,6 +75,20 @@ Modal/review_form-->
 </div>
 <!-- end
 Modal/review_edit-->
+
+  <div class="card mb-1">
+    <div class="card-body">
+      <% if @user_review.present?%>
+        <b>本の感想</b>
+        <%= image_tag @user_review.user.get_profile_image(60, 60) %>
+        <%= @user_review.user.nickname %>
+        <%= @user_review.comment%>
+        <%= l @user_review.created_at %>
+      <% else %>
+        <b>まだレビューはありません</b>
+      <% end %>
+    </div>
+  </div>
 
 
 <% @reviews.each do |review| %>
@@ -86,7 +100,7 @@ Modal/review_edit-->
         <%= review.user.nickname %>
         <%= review.comment%>
         <%= l review.created_at %>
-        <%= render "public/favorites/favorite", book:  %>
+        <!--<%#= render "public/favorites/favorite", review: @reviews %>-->
         
         <%= form_with model: review.comments.build, url: comments_path, method: :post, remote: true do |f| %>
           <%#= hidden_field_tag :review_id, review.id %>
