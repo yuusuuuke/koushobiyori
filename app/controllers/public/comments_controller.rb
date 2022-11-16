@@ -16,12 +16,18 @@ class Public::CommentsController < ApplicationController
   end
   
   def destroy
-    @book = Book.find(params[:book_id])
-    comment = PostComment.find_by(id: params[:id], book_id: params[:book_id] )
-    if comment.user_id != current_user.id
-      render :show
+    @comment = Comment.find(params[:id])
+    @book = @comment.review.book
+    if @comment.delete
+      flash[:success] = "コメントを削除しました"
+      redirect_to book_path(@book)
+    else
+      flash.now[:danger] = "コメントを削除できませんでした"
+      @review = Review.new
+      @reviews = @book.reviews.includes(:comments)
+      @review_edit = Review.find_by(book_id: @book.id, user_id: current_user.id)
+      render "public/books/show"
     end
-    comment.destroy
   end
 
   private

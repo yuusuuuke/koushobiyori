@@ -16,9 +16,6 @@ User.create!(email: "k@k", password: "kkkkkk", nickname: "kkkkkk")
 ReadStatus.create!(
   [
     {
-      status: "no_status"
-    },
-    {
       status: "read"
     },
     {

@@ -7,16 +7,17 @@
 
 <!--管理者がログインしているとき-->
         <% if admin_signed_in? %>
-          <span>LOGO</span>
+          <span>書好日和</span>
         <% else %>
-          <font size="6"><%= link_to root_path,class: 'nav-link text-dark' do %>
-            <i class="fas fa-birthday-cake"></i>LOGO</font>
-          <% end %>
+          <font size="6">
+            <%= link_to "好書日和", root_path, class: 'nav-link text-dark' %>
+          </font>
         <% end %>
 <!--会員がログインしているとき-->
         <% if user_signed_in? %>
           <div class="text-center">
-            ようこそ、<%= current_user.nickname %>さん!
+            <%= image_tag current_user.get_profile_image(70,70),class:"rounded-circle" %>
+            <b>ようこそ、<%= current_user.nickname %>さん!</b>
           </div>
         <% end %>
 
@@ -25,6 +26,7 @@
             <ul class="navbar-nav ml-auto">
 <!--会員がログインしているとき-->
               <% if user_signed_in? %>
+                <%= render "public/searches/search"%>
                 <li>
                   <%= link_to 'マイページ', user_path(current_user), class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
                 </li>
@@ -33,9 +35,6 @@
                 </li>
 <!--管理者がログインしているとき-->
               <% elsif admin_signed_in? %>
-                <li>
-                  
-                </li>
                 <li>
                   <%= link_to '会員一覧', admin_users_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
                 </li>

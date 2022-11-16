@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.integer "read_status_id", default: 1
     t.integer "category_id"
     t.string "title"
     t.string "author"
@@ -87,6 +86,8 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
   end
 
   create_table "read_statuses", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "book_id"
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

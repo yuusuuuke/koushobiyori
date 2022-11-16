@@ -1,7 +1,6 @@
 class CreateBooks < ActiveRecord::Migration[6.1]
   def change
     create_table :books do |t|
-      t.integer :read_status_id, default: 1
       t.integer :category_id
       t.string :title
       t.string :author

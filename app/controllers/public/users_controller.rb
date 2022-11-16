@@ -1,6 +1,10 @@
 class Public::UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
+      @read = @user.read_status.where(status: 1)
+      @reading = @user.read_status.where(status: 2)
+      @wish = @user.read_status.where(status: 3)
+      @reviews = @user.reviews.all
     end
   
     def edit
