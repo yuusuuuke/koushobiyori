@@ -3,7 +3,7 @@
     <div class = api_search_form >
       <%= form_tag api_search_path, method: :get do %>
         <%= text_field_tag :title, @title %>
-        <%= button_tag "追加する本を探す" %>
+        <%= button_tag "追加する本を探す", class: "btn btn-primary" %>
       <% end %>
     </div>
   <% end %> 

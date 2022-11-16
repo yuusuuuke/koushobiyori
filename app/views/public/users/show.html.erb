@@ -1,53 +1,100 @@
 <!--サイドバー-->
-  <div class="info">
-  <table>
-    <tr>
-      <td><%= image_tag @user.get_profile_image(100,100) %></td>
-    </tr>
-    <tr>
-  	  <th>ニックネーム</th>
-  	  <th><%= @user.nickname %></th>
-    </tr>
-    <tr>
-  	  <th>introduction</th>
-  	  <th><%= @user.introduction %></th>
-  	</tr>
-  	<tr>
-  	  <th>
-  	    <%= link_to followings_user_path(@user.id) do%>
-	        フォロー:<%= @user.relationships.count %>
-	      <% end %>
-	    </th>
-  	</tr>
-  	<tr>
-  	  <th>
-  	    <%= link_to followers_user_path(@user.id) do %>
-	        フォロワー:<%= @user.reverse_of_relationships.count %>
-	      <% end %>
-	    </th>
-	  </tr>
-	   <tr>
-     <th>
-     <% unless @user == current_user %>
-       <% if current_user.following?(@user) %>
-        <%= link_to user_relationships_path(@user), method: :delete do %>
-          <button class="btn btn-danger btn-sm">フォローを外す</button>
-        <% end %>
-       <% else %>
-        <%= link_to user_relationships_path(@user), method: :post do%>
-          <button class="btn btn-primary btn-sm">フォロー</button> 
-        <% end %>
-       <% end %>
-      <% end %>
-      </th>
-   </tr>
-</table>
-	  
-  </div>
+<div class='container'>
   <div class='row'>
-    <% if @user == current_user %>　
-    <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
-      <i class="fas fa-user-cog"></i>
-    <% end %>
-    <% end %>
+    <div class='col-3'>
+      <div class="info">
+        <table>
+          <tr>
+            <td><%= image_tag @user.get_profile_image(100,100),class:"rounded-circle" %></td>
+          </tr>
+          <tr>
+        	  <th>ニックネーム</th>
+        	  <th><%= @user.nickname %></th>
+          </tr>
+          <tr>
+        	  <th>introduction</th>
+        	  <th><%= @user.introduction %></th>
+        	</tr>
+        	<tr>
+        	  <th>
+        	    <%= link_to followings_user_path(@user.id) do%>
+      	        フォロー:<%= @user.relationships.count %>
+      	      <% end %>
+      	    </th>
+        	</tr>
+        	<tr>
+        	  <th>
+        	    <%= link_to followers_user_path(@user.id) do %>
+      	        フォロワー:<%= @user.reverse_of_relationships.count %>
+      	      <% end %>
+      	    </th>
+      	  </tr>
+      	   <tr>
+              <th>
+                <% unless @user == current_user %>
+                  <% if current_user.following?(@user) %>
+                    <%= link_to user_relationships_path(@user), method: :delete do %>
+                      <button class="btn btn-danger btn-sm">フォローを外す</button>
+                    <% end %>
+                  <% else %>
+                    <%= link_to user_relationships_path(@user), method: :post do%>
+                      <button class="btn btn-primary btn-sm">フォロー</button> 
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </th>
+          </tr>
+        </table>
+      </div>
+      <div class='row'>
+        <% if @user == current_user %>　
+          <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+<!--サイドバーend-->
+<!--main-->
+    <div class="col-md-9">
+      <h4>読んだ本一覧</h4>
+      <% @read.each do |read| %>
+        <div class="book_info">
+          <%= link_to book_path(read.book.id) do %>
+            <%= image_tag read.book.item_image_url, size: "100x140" %><br>
+          <% end %>
+          <%= link_to book_path(read.book.id) do %>
+            <%= read.book.title %>
+          <% end %>
+        </div>
+      <% end %>
+      <h4>読んでいる本一覧</h4>
+      <% @reading.each do |read| %>
+        <div class="book_info",  style="display: flex;">
+          <%= link_to book_path(read.book.id) do %>
+            <%= image_tag read.book.item_image_url, size: "100x140" %><br>
+          <% end %>
+          <%= link_to book_path(read.book.id) do %>
+            <%= read.book.title %>
+          <% end %>
+        </div>
+      <% end %>
+      <h4>読みたい本一覧</h4>
+      <% @wish.each do |wish| %>
+        <div class="book_info",  style="display: flex;">
+          <%= link_to book_path(wish.book.id) do %>
+            <%= image_tag wish.book.item_image_url, size: "100x140" %><br>
+          <% end %>
+          <%= link_to book_path(wish.book.id) do %>
+            <%= wish.book.title %>
+          <% end %>
+        </div>
+      <% end %>
+      <h4>レビュー一覧</h4>
+      <% @reviews.each do |review|%>
+      <%= image_tag review.book.item_image_url, size: "60x90" %>
+      <%= review.comment %>
+      <% end %>
+    </div>
   </div>
+</div>
