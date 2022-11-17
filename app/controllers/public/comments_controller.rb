@@ -1,5 +1,6 @@
 class Public::CommentsController < ApplicationController
-
+  before_action :authenticate_user!
+  
   def create
     @comment = current_user.comments.build(comment_params)
     @book = @comment.review.book
@@ -10,7 +11,8 @@ class Public::CommentsController < ApplicationController
       flash.now[:danger] = "コメントできませんでした"
       @review = Review.new
       @reviews = @book.reviews.includes(:comments)
-      @review_edit = Review.find_by(book_id: @book.id, user_id: current_user.id)
+      @user_review = Review.find_by(book_id: @book.id, user_id: current_user.id)
+       @user_book = current_user.read_status.find_by(book_id: @book.id)
       render 'public/books/show'
     end
   end
@@ -25,7 +27,8 @@ class Public::CommentsController < ApplicationController
       flash.now[:danger] = "コメントを削除できませんでした"
       @review = Review.new
       @reviews = @book.reviews.includes(:comments)
-      @review_edit = Review.find_by(book_id: @book.id, user_id: current_user.id)
+      @user_review = Review.find_by(book_id: @book.id, user_id: current_user.id)
+      @user_book = current_user.read_status.find_by(book_id: @book.id)
       render "public/books/show"
     end
   end

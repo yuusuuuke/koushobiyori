@@ -8,10 +8,6 @@ class Book < ApplicationRecord
   
 # 検索機能
   def self.looks(search, word)
-    if search == "partial_match"
-      @book = Book.where("title LIKE?","%#{word}%")
-    else
-      @book = Book.all
-    end
+    @book = Book.where("title LIKE?","%#{word}%")
   end
 end

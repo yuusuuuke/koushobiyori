@@ -47,7 +47,7 @@
         </table>
       </div>
       <div class='row'>
-        <% if @user == current_user %>　
+        <% if @user == current_user %>
           <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
             <i class="fas fa-user-cog"></i>
           <% end %>
@@ -58,7 +58,7 @@
 <!--main-->
     <div class="col-md-9">
       <div class="container">
-        <div class="read_info card mb-3">
+        <div class="read_info card">
           <h4 class="mb-2 bg-secondary text-white">読んだ本</h4>
           <div class="row ml-2">
             <% @read.each do |read| %>
@@ -73,7 +73,11 @@
             <% end %>
           </div>
         </div>
-        <div class="reading_info card mb-3">
+        <div class="text-right">
+          <%= link_to "読んだ本一覧", "/book/#{@user.id}/read", method: :get, class:"btn btn-outline-success mb-3" %>
+        </div>
+          
+        <div class="reading_info card">
           <h4 class="mb-2 bg-secondary text-white">読んでいる本</h4>
           <div class="row ml-2">
             <% @reading.each do |read| %>
@@ -88,7 +92,11 @@
             <% end %>
           </div>
         </div>
-        <div class="wish_info card mb-3">
+        <div class="text-right">
+          <%= link_to "読んでいる本一覧", "/book/#{@user.id}/reading", method: :get, class:"btn btn-outline-success mb-3" %>
+        </div>
+          
+        <div class="wish_info card">
           <h4 class="mb-2 bg-secondary text-white">読みたい本</h4>
           <div class="row ml-2">
             <% @wish.each do |wish| %>
@@ -103,17 +111,70 @@
             <% end %>
           </div>
         </div>
+        <div class="text-right">
+          <%= link_to "読みたい本一覧", "/book/#{@user.id}/wish", method: :get, class:"btn btn-outline-success mb-3" %>
+        <div>
         
-        <div class="review_info card mb-3">
+        <div class="review_info card">
           <h4 class="mb-2 bg-secondary text-white">レビュー</h4>
-              <% @reviews.each do |review|%>
-              <div class="row-12">
-                <%= image_tag review.book.item_image_url, size: "60x90" %>
-                <%= review.comment %>
+          <% @reviews.each do |review| %>
+            <div class="card mb-1">
+              <div class="card-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-3 form-inline">
+                      <%= link_to book_path(review.book.id) do %>
+                        <%= image_tag review.book.item_image_url, size: "100x140" %>
+                      <% end %>
+                      <%= review.book.title%>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="row border-bottom">
+                        <p><%= l review.created_at %>&ensp;&ensp;&ensp;<%= review.favorites.count%>いいね</p>
+                      </div>
+                      <div class="row">
+                        <%=safe_join(review.comment.split("\n"),tag(:br))%>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% review.comments.where.not(id: nil).each do |comment| %>
+                  <div class="card mb-1 ml-5">
+                    <div class="card-body">
+                      <% if comment.user_id == current_user.id %>
+                        <button type="button" class="close" aria-label="Close">
+                          <%= link_to comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                            <span aria-hidden="true">&times;</span>
+                          <% end %>
+                        </button>
+                      <% end %>
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-md-2 d-flex flex-column form-inline">
+                            <%= link_to user_path(comment.user.id) do %>
+                              <%= image_tag comment.user.get_profile_image(60,60), class:"rounded-circle" %>
+                            <% end %>
+                          </div>
+                          <div class="col-md-10">
+                            <div class="row border-bottom">
+                              <%= comment.user.nickname %>&ensp;&ensp;&ensp;<%= l comment.created_at%>
+                            </div>
+                            <div class="row">
+                              <%= comment.comment %>
+                            </div>
+                          </div>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+                <% end %>
               </div>
-            <% end %>
-            
+            </div>
+          <% end %>
         </div>
+        <div class="text-right">
+          <%= link_to "レビュー一覧", "/book/#{@user.id}/reviews", method: :get, class:"btn btn-outline-success mb-3" %>
+        <div>
       </div>
     </div>
   </div>

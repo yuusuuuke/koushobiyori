@@ -14,7 +14,7 @@ User.create!(email: "y@y", password: "yyyyyy", nickname: "yyyyyy")
 User.create!(email: "k@k", password: "kkkkkk", nickname: "kkkkkk")
 
 ReadStatus.create!(
-  [
+  # [いらない
     {
       status: "read"
     },
