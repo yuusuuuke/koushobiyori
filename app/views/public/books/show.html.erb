@@ -1,20 +1,20 @@
 <div class='container'>
   <div class='row'>
-    <div class='col-3'>
-      <div class="book_info">
-        <div class="book_image"><%= image_tag @book.item_image_url, size: "140x180" %></div>
-          <div class="book_title"><%= @book.title %></div>
-          <div class="book_auther"><%= @book.author %></div>
-          <div class="book_link"><%= link_to "楽天Booksで購入", @book.item_url, class: "btn btn-info my-2" %></div>
-        </div>
-        <div class="read_status">
-          <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
-          <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success my-2" %><br>
-          <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
-        </div>
+    <div class='col-md-3'>
+      <div class="book_info d-flex flex-column form-inline">
+        <%= image_tag @book.item_image_url, size: "140x180" %>
+        <%= @book.title %>
+        <%= @book.author %>
+        <%= link_to "楽天Booksで購入", @book.item_url, class: "btn btn-info my-2" %>
       </div>
-      
-    <div class='col-9'>
+      <div class="read_status d-flex flex-column form-inline">
+        <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
+        <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
+        <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
+      </div>
+    </div>
+    
+    <div class='col-md-9'>
       <div class="review_info">
         <div class="review-button">
           <% unless @reviews.where(user_id: current_user.id, book_id: @book.id).present?%>
@@ -84,15 +84,15 @@
         Modal/review_edit-->
         
         <div class="book_tag mt-3 ">
-          <h4><%= current_user.nickname %>さんのレビュー</h4>
+          <h4 class="bg-secondary text-white"><%= current_user.nickname %>さんのレビュー</h4>
         </div>
         <div class="card mb-3 pd-0">
           <div class="card-body pd-0">
             <table>
               <% if @user_review.present?%>
                 <tr>
-                  <td><div class=""><%= image_tag @user_review.user.get_profile_image(60, 60) %></td>
-                  <td><%= @user_review.user.nickname %><%= l @user_review.created_at %><br>
+                  <td><div class="mr-4"><%= image_tag @user_review.user.get_profile_image(60, 60) %></div></td>
+                  <td><%= @user_review.user.nickname %>&ensp;&ensp;&ensp;<%= l @user_review.created_at %><hr>
                     <%= @user_review.comment%>
                   </td>
                 </tr>
@@ -103,36 +103,41 @@
           </div>
         </div>
 
+        <h4 class="bg-secondary text-white">レビュー一覧</h4>
         <% @reviews.each do |review| %>
-        <h4>レビュー一覧</h4>
           <div class="card mb-1">
               <div class="card-body">
                 <table>
                   <tr>
-                    <td><%= link_to user_path(review.user_id) do %>
+                    <td><div class="mr-4"><%= link_to user_path(review.user_id) do %>
                           <%= image_tag review.user.get_profile_image(60, 60) %>
-                        <% end %>
+                        <% end %></div>
                     </td>
-                    <td><%= review.user.nickname %><%= l review.created_at %><br>
-                      <%= review.comment%>
+                    <td><%= review.user.nickname %>&ensp;&ensp;&ensp;<%= l review.created_at %><hr>
+                      <%= review.comment%><br>
+                      <div id=<%= "favorite_btn" + review.id.to_s %>>
+                        <%= render "public/favorites/favorite", review: review, book: @book %> <!--reviewはeach文のブロック変数使ってる-->
+                       </div>
                     </td>
                   </tr>
                 </table>
-                <div id=<%= "favorite_btn" + review.id.to_s %>>
-                  <%= render "public/favorites/favorite", review: review, book: @book %> <!--reviewはeach文のブロック変数使ってる-->
-                </div>
+                
                 
                 <% review.comments.where.not(id: nil).each do |comment| %>
-                  <div class="card mb-1">
-                    <div class="card-body"> 
+                  <div class="card mb-1 ml-5">
+                    <div class="card-body">
+                      <% if comment.user_id == current_user.id %>
+                        <button type="button" class="close" aria-label="Close">
+                          <%= link_to comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                            <span aria-hidden="true">&times;</span>
+                          <% end %>
+                        </button>
+                      <% end %>
                       <table>
                         <tr>
-                          <td><%= image_tag comment.user.get_profile_image(60,60) %></td>
+                          <td><div class="mr-4"><%= image_tag comment.user.get_profile_image(60,60) %></div></td>
                           <td>
-                            <%= comment.user.nickname %>
-                            <% if comment.user_id == current_user.id %>
-                              <%= link_to "X", comment_path(comment), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除しますか?"} %>
-                            <% end %><br>
+                            <%= comment.user.nickname %><hr>
                             <%= comment.comment %>
                           </td>
                         </tr>

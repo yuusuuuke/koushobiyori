@@ -2,7 +2,7 @@
 <div class='container'>
   <div class='row'>
     <div class='col-3'>
-      <div class="info">
+      <div class="info d-flex flex-column form-inline">
         <table>
           <tr>
             <td><%= image_tag @user.get_profile_image(100,100),class:"rounded-circle" %></td>
@@ -57,44 +57,64 @@
 <!--サイドバーend-->
 <!--main-->
     <div class="col-md-9">
-      <h4>読んだ本一覧</h4>
-      <% @read.each do |read| %>
-        <div class="book_info">
-          <%= link_to book_path(read.book.id) do %>
-            <%= image_tag read.book.item_image_url, size: "100x140" %><br>
-          <% end %>
-          <%= link_to book_path(read.book.id) do %>
-            <%= read.book.title %>
-          <% end %>
+      <div class="container">
+        <div class="read_info card mb-3">
+          <h4 class="mb-2 bg-secondary text-white">読んだ本</h4>
+          <div class="row ml-2">
+            <% @read.each do |read| %>
+              <div class="col-md-2">
+                <%= link_to book_path(read.book.id) do %>
+                  <%= image_tag read.book.item_image_url, size: "100x140" %><br>
+                <% end %>
+                <%= link_to book_path(read.book.id) do %>
+                  <%= read.book.title %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
-      <% end %>
-      <h4>読んでいる本一覧</h4>
-      <% @reading.each do |read| %>
-        <div class="book_info",  style="display: flex;">
-          <%= link_to book_path(read.book.id) do %>
-            <%= image_tag read.book.item_image_url, size: "100x140" %><br>
-          <% end %>
-          <%= link_to book_path(read.book.id) do %>
-            <%= read.book.title %>
-          <% end %>
+        <div class="reading_info card mb-3">
+          <h4 class="mb-2 bg-secondary text-white">読んでいる本</h4>
+          <div class="row ml-2">
+            <% @reading.each do |read| %>
+              <div class="col-md-2">
+                <%= link_to book_path(read.book.id) do %>
+                  <%= image_tag read.book.item_image_url, size: "100x140" %><br>
+                <% end %>
+                <%= link_to book_path(read.book.id) do %>
+                  <%= read.book.title %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
-      <% end %>
-      <h4>読みたい本一覧</h4>
-      <% @wish.each do |wish| %>
-        <div class="book_info",  style="display: flex;">
-          <%= link_to book_path(wish.book.id) do %>
-            <%= image_tag wish.book.item_image_url, size: "100x140" %><br>
-          <% end %>
-          <%= link_to book_path(wish.book.id) do %>
-            <%= wish.book.title %>
-          <% end %>
+        <div class="wish_info card mb-3">
+          <h4 class="mb-2 bg-secondary text-white">読みたい本</h4>
+          <div class="row ml-2">
+            <% @wish.each do |wish| %>
+              <div class="col-md-2">
+                <%= link_to book_path(wish.book.id) do %>
+                  <%= image_tag wish.book.item_image_url, size: "100x140" %><br>
+                <% end %>
+                <%= link_to book_path(wish.book.id) do %>
+                  <%= wish.book.title %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
-      <% end %>
-      <h4>レビュー一覧</h4>
-      <% @reviews.each do |review|%>
-      <%= image_tag review.book.item_image_url, size: "60x90" %>
-      <%= review.comment %>
-      <% end %>
+        
+        <div class="review_info card mb-3">
+          <h4 class="mb-2 bg-secondary text-white">レビュー</h4>
+              <% @reviews.each do |review|%>
+              <div class="row-12">
+                <%= image_tag review.book.item_image_url, size: "60x90" %>
+                <%= review.comment %>
+              </div>
+            <% end %>
+            
+        </div>
+      </div>
     </div>
   </div>
 </div>

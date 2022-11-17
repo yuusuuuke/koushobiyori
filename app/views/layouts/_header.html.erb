@@ -16,8 +16,18 @@
 <!--会員がログインしているとき-->
         <% if user_signed_in? %>
           <div class="text-center">
-            <%= image_tag current_user.get_profile_image(70,70),class:"rounded-circle" %>
-            <b>ようこそ、<%= current_user.nickname %>さん!</b>
+            <table>
+              <tr>
+                <td>
+                  <%= link_to user_path(current_user), class:"mr-2" do%>
+                    <%= image_tag current_user.get_profile_image(70,70),class:"rounded-circle" %>
+                  <% end %>
+                </td>
+                <td>ようこそ、<br><%= current_user.nickname %>さん!</td>
+              </tr>
+            </table>
+            
+            <b></b>
           </div>
         <% end %>
 
