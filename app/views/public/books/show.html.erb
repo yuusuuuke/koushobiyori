@@ -1,19 +1,38 @@
+<!--サイドバー-->
 <div class='container'>
   <div class='row'>
     <div class='col-md-3'>
       <div class="book_info d-flex flex-column form-inline">
-        <%= image_tag @book.item_image_url, size: "140x180" %>
-        <%= @book.title %>
-        <%= @book.author %>
-        <%= link_to "楽天Booksで購入", @book.item_url, class: "btn btn-info my-2" %>
+        <div><%= image_tag @book.item_image_url, size: "140x180" %></div>
+        <div><%= @book.title %></div>
+        <div><%= @book.author %></div>
+        <div><%= link_to "楽天Booksで購入", @book.item_url, class: "btn btn-info my-2" %></div>
       </div>
+      
       <div class="read_status d-flex flex-column form-inline">
-        <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
-        <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
-        <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
+        <% if @user_book.present? && @user_book.status == "1" %>
+          <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-warning" %> </br>
+          <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
+          <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
+        <% elsif @user_book.present? && @user_book.status == "2" %>
+          <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
+          <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get, class:"btn btn-warning" %> </br>
+          <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
+        <% elsif @user_book.present? && @user_book.status == "3" %>
+          <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
+          <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
+          <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-warning" %>
+        <% else %>
+          <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
+          <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
+          <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
+        <% end %>
       </div>
     </div>
-    
+<!--end
+      サイドバー-->
+      
+<!--レビュー-->
     <div class='col-md-9'>
       <div class="review_info">
         <div class="review-button">
@@ -88,41 +107,53 @@
         </div>
         <div class="card mb-3 pd-0">
           <div class="card-body pd-0">
-            <table>
-              <% if @user_review.present?%>
-                <tr>
-                  <td><div class="mr-4"><%= image_tag @user_review.user.get_profile_image(60, 60) %></div></td>
-                  <td><%= @user_review.user.nickname %>&ensp;&ensp;&ensp;<%= l @user_review.created_at %><hr>
-                    <%= @user_review.comment%>
-                  </td>
-                </tr>
-              <% else %>
-                <b>まだレビューはありません</b>
-              <% end %>
-            </table>
+            <div class="container">
+              <div class="row">
+                <% if @user_review.present?%>
+                  <div class="col-md-2 d-flex flex-column form-inline">
+                    <%= image_tag @user_review.user.get_profile_image(60, 60) %>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row border-bottom">
+                        <%= @user_review.user.nickname %>&ensp;&ensp;&ensp;<%= l @user_review.created_at %>
+                    </div>
+                    <div class="row">
+                      <%=safe_join(@user_review.comment.split("\n"),tag(:br))%>
+                    </div>
+                  </div>
+                <% else %>
+                  <b>まだレビューはありません</b>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
 
         <h4 class="bg-secondary text-white">レビュー一覧</h4>
         <% @reviews.each do |review| %>
           <div class="card mb-1">
-              <div class="card-body">
-                <table>
-                  <tr>
-                    <td><div class="mr-4"><%= link_to user_path(review.user_id) do %>
-                          <%= image_tag review.user.get_profile_image(60, 60) %>
-                        <% end %></div>
-                    </td>
-                    <td><%= review.user.nickname %>&ensp;&ensp;&ensp;<%= l review.created_at %><hr>
-                      <%= review.comment%><br>
+            <div class="card-body">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-2 d-flex flex-column form-inline">
+                    <%= link_to user_path(review.user_id) do %>
+                      <%= image_tag review.user.get_profile_image(60, 60) %>
+                    <% end %>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row border-bottom">
+                      <%= review.user.nickname %>&ensp;&ensp;&ensp;<%= l review.created_at %>
+                    </div>
+                    <div class="row">
+                      <%=safe_join(review.comment.split("\n"),tag(:br))%>
+                    </div>
+                    <div class="row">
                       <div id=<%= "favorite_btn" + review.id.to_s %>>
                         <%= render "public/favorites/favorite", review: review, book: @book %> <!--reviewはeach文のブロック変数使ってる-->
-                       </div>
-                    </td>
-                  </tr>
-                </table>
-                
-                
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <% review.comments.where.not(id: nil).each do |comment| %>
                   <div class="card mb-1 ml-5">
                     <div class="card-body">
@@ -133,25 +164,29 @@
                           <% end %>
                         </button>
                       <% end %>
-                      <table>
-                        <tr>
-                          <td><div class="mr-4"><%= image_tag comment.user.get_profile_image(60,60) %></div></td>
-                          <td>
-                            <%= comment.user.nickname %><hr>
-                            <%= comment.comment %>
-                          </td>
-                        </tr>
-                      </table>
+                      <div class="row">
+                        <div class="col-md-2 d-flex flex-column form-inline">
+                          <%= image_tag comment.user.get_profile_image(60,60) %>
+                        </div>
+                        <div class="col-md-9">
+                          <div class="row border-bottom">
+                            <%= comment.user.nickname %>&ensp;&ensp;&ensp;<%= l comment.created_at %>
+                          </div>
+                          <div class="row">
+                            <%=safe_join(comment.comment.split("\n"),tag(:br))%>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 <% end %>
                 <%= form_with model: review.comments.build, url: comments_path, method: :post, remote: true do |f| %>
                   <%#= hidden_field_tag :review_id, review.id %>
                   <%= f.hidden_field :review_id, value: review.id %>
-                  <p><%= f.text_area :comment, size:"60x2", placeholder: "コメントする" %></p>
+                  <%= f.text_area :comment, size:"60x2", placeholder: "コメントする" %><br>
                   <%= f.submit "コメントする", class:"btn btn-primary" %>
                 <% end %>
-              </div>
+            </div>
           </div>
         <% end %>
       </div>

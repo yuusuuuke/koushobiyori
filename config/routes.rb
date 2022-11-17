@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       get "api_search" => "api_searches#search_result"
       post "api_book_create" => "api_searches#create"
       get "read_status/:book_id/update/:status", to: "read_status#update"
+      get "book/:user_id/read" => "books#read"
+      get "book/:user_id/reading" => "books#reading"
+      get "book/:user_id/wish" => "books#wish"
+      get "book/:user_id/reviews" => "books#reviews"
       resources :users, only: [:show, :edit, :update, :update]do
         resource :relationships, only: [:create,:destroy]
         get :followings, on: :member
