@@ -2,8 +2,8 @@ class Public::ReadStatusController < ApplicationController
   before_action :authenticate_user!
   
    def update
-     if current_user.read_status.find_by(book_id: params[:book_id]).present? 
-       read_status = current_user.read_status.last
+     read_status = current_user.read_status.find_by(book_id: params[:book_id])
+     if read_status.present? 
        if read_status.status == params[:status]
          read_status.delete
        else
