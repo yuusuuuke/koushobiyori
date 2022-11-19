@@ -1,29 +1,37 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <div class="col">
+      <%= link_to "作成日順", admin_reviews_path(create_latest: "作成日"), class: "btn btn-sm btn-warning" %>
+      <%= link_to "更新日順", admin_reviews_path(update_latest: "更新日"), class: "btn btn-sm btn-primary" %>
+      <h4 class="mt-4 mb-2 bg-secondary text-white">レビュー一覧</h4>
       <div class="review_info card">
-        <h4 class="mb-2 bg-secondary text-white">レビュー</h4>
         <% @reviews.each do |review| %>
           <div class="card mb-1">
             <div class="card-body">
-              <% if review.user_id == current_user.id %>
-                <button type="button" class="close" aria-label="Close">
-                  <%= link_to book_review_path(review.book.id, review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
-                    <span aria-hidden="true">&times;</span>
-                  <% end %>
-                </button>
-              <% end %>
+              <button type="button" class="close" aria-label="Close">
+                <%= link_to admin_review_path(review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                  <span aria-hidden="true">&times;</span>
+                <% end %>
+              </button>
               <div class="container">
                 <div class="row">
                   <div class="col-md-3 d-flex flex-column form-inline">
-                    <%= link_to book_path(review.book.id) do %>
+                    <%= link_to edit_admin_book_path(review.book.id) do %>
                       <%= image_tag review.book.item_image_url, size: "100x140", class:"mr-3" %>
                     <% end %>
                     <%= review.book.title%>
                   </div>
                   <div class="col-md-9">
                     <div class="row border-bottom">
-                      <p><%= l review.created_at %>&ensp;&ensp;&ensp;<%= review.favorites.count%>いいね</p>
+                      <div class="col-md-2 ">
+                        <%= image_tag review.user.get_profile_image(60,60), class:"rounded-circle"%>
+                      </div>
+                      <div class="col-md-2 mt-3">
+                        <%= review.user.nickname %>
+                      </div>
+                      <div class="col-md-4 mt-3">
+                        <p><%= l review.created_at %>&ensp;&ensp;&ensp;<%= review.favorites.count%>いいね</p>
+                      </div>
                     </div>
                     <div class="row">
                       <%= review.comment%>
@@ -34,17 +42,15 @@
               <% review.comments.where.not(id: nil).each do |comment| %>
                 <div class="card mb-1 ml-5">
                   <div class="card-body">
-                    <% if comment.user_id == current_user.id %>
-                      <button type="button" class="close" aria-label="Close">
-                        <%= link_to comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
-                          <span aria-hidden="true">&times;</span>
-                        <% end %>
-                      </button>
-                    <% end %>
+                    <button type="button" class="close" aria-label="Close">
+                      <%= link_to admin_comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                        <span aria-hidden="true">&times;</span>
+                      <% end %>
+                    </button>
                     <div class="container">
                       <div class="row">
                         <div class="col-md-2 d-flex flex-column form-inline">
-                          <%= link_to user_path(comment.user.id) do %>
+                          <%= link_to edit_admin_user_path(comment.user.id) do %>
                             <%= image_tag comment.user.get_profile_image(60,60), class:"rounded-circle" %>
                           <% end %>
                         </div>

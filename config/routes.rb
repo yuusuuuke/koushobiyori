@@ -7,11 +7,13 @@ Rails.application.routes.draw do
     namespace :admin do
       get '/' =>'homes#top'
       get "search" => "searches#search"
+      get "api_search" => "api_searches#search_result"
+      post "api_book_create" => "api_searches#create"
       resources :users, only:[:index, :edit, :create, :update, :destroy]
-      resources :books, only:[:show, :edit, :create, :update, :destroy]
+      resources :books, only:[:show, :index, :edit, :create, :update, :destroy]
       resources :categories, only:[:index, :edit, :create, :update, :destroy]
-      resources :reviews, only:[:destroy]
-      resources :comments,only:[:destroy]
+      resources :reviews, only:[:index, :destroy]
+      resources :comments,only:[:index, :destroy]
     end
   
 # ユーザ用

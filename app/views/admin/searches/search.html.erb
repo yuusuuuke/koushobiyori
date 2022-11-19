@@ -1,36 +1,60 @@
-<table class = "table table-hover table-inverse">
-  <!--検索対象モデルによって表示内容変わるので、条件分岐必要-->
+<!--検索対象モデルによって表示内容変わるので、条件分岐必要--> 
+<div class="container mt-5">
   <% if @range == "User" %>
-    <tbody>
-      <% @users. each do |user| %>
-        <h2>Users search for user.word </h2>
-        <tr>
-          <th></th>
-          <th>ニックネーム</th>
-          <th>自己紹介文</th>
-        </tr>
-        <tr>
-          <td><%= image_tag user.get_profile_image(50,50) %></td>
-          <td><%= user.nickname %></td>
-          <td><%= user.introduction %></td>
-        </tr>
-      <% end %>
-    </tbody>
+    <div class="row">
+      <div class="col-md-10">
+        <% unless @users.blank? %>
+          <h5 style="background-color: #eee;"><%= @word %>の検索結果</h5>
+          <table class = "table table-hover table-inverse">
+            <tr>
+              <th>会員ID</th>
+              <th>画像</th>
+              <th>ニックネーム</th>
+              <th>メールアドレス</th>
+              <th>会員ステータス</th>
+            </tr>
+            <% @users. each do |user| %>
+              <tr>
+                <td><%= user.id %></td>
+                <td>
+                  <%= link_to edit_admin_user_path(user.id),class: 'text-dark' do %>
+                    <%= image_tag user.get_profile_image(50,50) %>
+                   <% end %> 
+                </td>
+                <td>
+                  <%= link_to edit_admin_user_path(user.id),class: 'text-dark' do %>
+                    <%= user.nickname %>
+                  <% end %>
+                </td>
+                <td><%= user.email %></td>
+                <% if user.is_active == true %>
+                  <td class="text-success">有効</td>
+                <% else %>
+                  <td class="text-secondary">退会</td>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+          </div>
+        <% else %>
+          <h5 style="background-color: #eee;"><%= @word %>の検索結果はありません</h5>
+        <% end %>
+      </div>
+    </div> 
   <% elsif @range == "Book" %>
-    <h2>Books search for user.word</h2>
-    <tbody>
+  <%= render "admin/api_searches/api_search" %>
+    <h5 style="background-color: #eee;"><%= @word %>の検索結果</h5>
+    <div class="row mt-3">
       <% @books.each do |book| %>
-        <tr>
-          <th>画像</th>
-          <th>タイトル</th>
-          <th>著者</th>
-        </tr>
-        <tr>
-          <td><%= book.item_image_url(50,50) %></td>
-          <td><%= book.title %></td>
-          <td><%= book.author %></td>
-        </tr>
+        <div class="col-md-2 col-sm-4 col-6 d-flex flex-column form-inline mb-2">
+          <%= link_to edit_admin_book_path(book) do%>
+            <%=image_tag book.item_image_url, size: "100x140" %>
+          <% end %>
+          <%= link_to edit_admin_book_path(book) do%>
+            <%= book.title %>
+          <% end %>
+        </div>
       <% end %>
-    </tbody>
+    </div>
   <% end %>
-</table>
+</div>

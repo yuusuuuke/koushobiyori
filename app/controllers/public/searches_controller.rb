@@ -3,6 +3,7 @@ class Public::SearchesController < ApplicationController
    
   def search_result
     @books = Book.looks(params[:search], params[:word])#looks：Bookmodel内で定義してる
+    @word = params[:word]
   end
   
 end

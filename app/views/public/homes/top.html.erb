@@ -1,3 +1,7 @@
 <h3>トップページ</h3>
 <p>レビューが多い順に本を並べる</p>
+<% @review.keys.each do |review| %>
+  <% book = Book.find(review) %>
+  <%= book.title %>
+<% end %>
 <p>ページ観覧数が多い順に本を並べる</p>

@@ -1,22 +1,34 @@
-<table class = "table table-hover table-inverse">
-  <h2>検索結果</h2>
-  <% unless @books.blank? %>
-    <tbody>
+<div class="container">
+<h2><%= @word%>の検索結果</h2>
+  <div class="search_form row">
+    <% unless @books.blank? %>
       <% @books.each do |book| %>
-        <tr>
-          <td>
-            <%= link_to book_path(book), method: :get do%>
-      　  　    <%= image_tag book.item_image_url, size: "100x140" %><br>
-        　  　  <%= book.title %><br>
-          　　  <%= book.author %>
-        　　  <% end %>
-        　</td>
-        </tr>
+        <div class="col-2 mb-2 d-flex flex-column form-inline">
+          <%= link_to book_path(book), method: :get do%>
+            <%= image_tag book.item_image_url, size: "100x140"%>
+          <% end %>
+          <%= link_to book_path(book), method: :get do%>
+            <%= book.title %>
+          <% end%>
+          <%= book.author %>
+        </div>
       <% end %>
-    </tbody>
+    </div>
   <% else %>
-    <b>検索された本はまだ登録されていません。</b><br>
-    <b>こちらから検索して、本を登録してください。</b>
-    <%= render "public/api_searches/api_search"%>
+    <div class="api_search_form row">
+      <h5>
+        <b>検索された本はまだ登録されていません。<br>
+        こちらから再度検索して、本を登録してください。
+        </b>
+      </h5>
+      <div class="search_form col-10 mt-3">
+        <%= render "public/api_searches/api_search"%>
+      </div>
+      <em>
+        ※こちらは楽天APIを利用し、本の情報を取得します。<br>
+         検索結果の表示上限は３０件です。<br>
+         本のタイトルと巻数で検索される方は、間にスペースは入れず検索してください。
+      </em>
+    </div>
   <% end %>
-</table>
+</div>

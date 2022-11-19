@@ -37,7 +37,7 @@ class Public::ReviewsController < ApplicationController
   def destroy
     book = Book.find(params[:book_id])
     review = book.reviews.find_by(book_id: book.id, user_id: current_user.id)
-    if review.delete
+    if review.destroy
       flash[:success] = "レビューを削除しました"
       redirect_to request.referrer
     else

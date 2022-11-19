@@ -1,5 +1,5 @@
-class Public::ApiSearchesController < ApplicationController
-  before_action :authenticate_user!
+class Admin::ApiSearchesController < ApplicationController
+   before_action :authenticate_admin!
   def search_result
 #空の配列を作成
     @books = []

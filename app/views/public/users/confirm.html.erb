@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="row col-4 mx-auto">
-    <%= link_to "退会しない", my_page_path, class: "btn btn-md btn-primary col-5" %>
+    <%= link_to "退会しない", user_path(current_user), class: "btn btn-md btn-primary col-5" %>
     <div class="col-2"></div>
     <%= link_to "退会する", users_withdraw_path, method: :patch, class: "btn btn-md btn-danger col-5", data: { confirm: "本当の本当に退会しますか？" } %>
   </div>

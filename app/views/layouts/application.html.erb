@@ -13,12 +13,11 @@
 
   <body>
     <%= render "layouts/header" %>
-    <%= render "admin/searches/search"%>
-    <% flash.each do |message_type, message| %>  <div class="alert alert-<%= message_type %>">
-    <%= message %>
-  </div>
-<% end %>
-    <%= notice %>
+    <% flash.each do |message_type, message| %> 
+      <div class="alert alert-<%= message_type %>">
+        <%= message %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
