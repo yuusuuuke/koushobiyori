@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_115344) do
     t.bigint "isbn"
     t.string "item_url"
     t.string "item_image_url"
+    t.integer "impressions_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

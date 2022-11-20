@@ -1,13 +1,10 @@
 class Admin::CommentsController < ApplicationController
   
   def index
-    @comments = Comment.all
     if params[:create_latest]
-      @reviews = Review.includes(@comments).order(created_at: :desc)
-    elsif params[:update_latest]
-      @reviews = Review.includes(@comments).order(created_at: :desc)
+      @reviews = Review.joins(:comments).order("comments.created_at desc")
     else
-      @reviews = Review.includes(@comments).order(created_at: :desc)
+      @reviews = Review.joins(:comments)
     end
   end
   

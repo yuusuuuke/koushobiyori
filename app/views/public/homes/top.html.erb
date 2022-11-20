@@ -1,7 +1,40 @@
-<h3>トップページ</h3>
-<p>レビューが多い順に本を並べる</p>
-<% @review.keys.each do |review| %>
-  <% book = Book.find(review) %>
-  <%= book.title %>
+
+<p>フォローワーランキング</p>
+<% @follower_ranking.each do |follower_ranking|%>
+<% user = User.find(follower_ranking.follower_id)%>
+<%= user.nickname %>
 <% end %>
-<p>ページ観覧数が多い順に本を並べる</p>
+<div class="container">
+  <div class="read_info card mb-3">
+    <h4 class="mb-2 bg-secondary text-white">レビューが多い本</h4>
+    <div class="row ml-2">
+      <% @reviews.each do |review| %>
+        <% book = Book.find(review.book.id) %>
+        <div class="col-md-2">
+          <%= link_to book_path(book.id) do %>
+            <%= image_tag book.item_image_url, size: "100x140" %><br>
+          <% end %>
+          <%= link_to book_path(book.id) do %>
+            <%= book.title %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!---->
+  <div class="read_info card mb-3">
+    <h4 class="mb-2 bg-secondary text-white">注目の本</h4><!--観覧数-->
+    <div class="row ml-2">
+      <% @count_books.each do |book| %>
+        <div class="col-md-2">
+          <%= link_to book_path(book.id) do %>
+            <%= image_tag book.item_image_url, size: "100x140" %><br>
+          <% end %>
+          <%= link_to book_path(book.id) do %>
+            <%= book.title %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

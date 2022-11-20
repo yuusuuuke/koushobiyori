@@ -23,8 +23,13 @@ class Admin::ApiSearchesController < ApplicationController
     result = RakutenWebService::Books::Book.search({
       isbn: params[:isbn],
     })
-    Book.find_or_create_by!(read(result.response.as_json[0]["params"]))
-    redirect_to request.referer
+    book_last = Book.last
+    @book = Book.find_or_create_by!(read(result.response.as_json[0]["params"]))
+    if book_last.id < @book.id || Book.blank?
+      redirect_to edit_admin_book_path(@book), flash: { success: "#{@book.title}本を追加しました" }
+    else
+      redirect_to edit_admin_book_path(@book)
+    end
   end
 
   private

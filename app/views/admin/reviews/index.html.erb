@@ -24,7 +24,9 @@
                   <div class="col-md-9">
                     <div class="row border-bottom">
                       <div class="col-md-2 ">
-                        <%= image_tag review.user.get_profile_image(60,60), class:"rounded-circle"%>
+                        <%= link_to edit_admin_user_path(review.user.id) do %>
+                          <%= image_tag review.user.get_profile_image(60,60), class:"rounded-circle"%>
+                        <% end %>
                       </div>
                       <div class="col-md-2 mt-3">
                         <%= review.user.nickname %>

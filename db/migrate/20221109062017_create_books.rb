@@ -7,6 +7,7 @@ class CreateBooks < ActiveRecord::Migration[6.1]
       t.bigint :isbn
       t.string :item_url
       t.string :item_image_url
+      t.integer :impressions_count, default: 0
       t.timestamps
     end
   end

@@ -11,6 +11,13 @@ class Admin::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    if params[:create_latest]
+      @reviews = @user.reviews.order(created_at: :desc)
+    elsif params[:update_latest]
+      @reviews = @user.reviews.order(updated_at: :desc)
+    else
+      @reviews = @user.reviews
+    end
   end
 
   def update

@@ -61,6 +61,7 @@ gem 'rakuten_web_service'
 gem 'devise'
 gem 'kaminari','~> 1.2.1'
 gem 'enum_help'
+gem 'impressionist'
 gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
