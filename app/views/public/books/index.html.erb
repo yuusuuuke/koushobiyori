@@ -1,2 +1,21 @@
-<h1>Public::Books#index</h1>
-<p>Find me in app/views/public/books/index.html.erb</p>
+<div class="container">
+  <div class="row my-3">
+    <h5><b>カテゴリー一覧</b></h5>
+    <div class="col-md-12">
+      <% @categories.each do |category|%>
+        <%= link_to category.name, books_path(category_id: category.id), class: "mx-1 my-1 btn btn-sm btn-warning" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <h5><b>本の一覧</b></h5>
+  <div class="row">
+    <% @books.each do |book| %>
+      <div class="col-md-2 d-flex flex-column form-inline">
+        <%= image_tag book.item_image_url, size: "100x140"%>
+        <%= book.title%>
+      </div>
+    <% end %>
+  </div>
+</div>

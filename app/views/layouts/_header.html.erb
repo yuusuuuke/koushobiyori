@@ -41,6 +41,9 @@
                   <%= render "public/searches/search"%>
                 </li>
                 <li>
+                  <%= link_to '本の一覧', books_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+                </li>
+                <li>
                   <%= link_to 'マイページ', user_path(current_user), class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
                 </li>
                 <li>

@@ -1,5 +1,14 @@
 class Public::BooksController < ApplicationController
   def index
+    @categories = Category.all
+    # category = Category.find(params[:id])
+   
+    if  params[:category_id]
+      @category = Category.find(params[:category_id])
+      @books = @category.books.order("books.created_at desc")
+    else
+      @books = Book.order(created_at: :desc)
+    end
   end
 
   def show#commentとreviewのcontrollerでrender入れてる
