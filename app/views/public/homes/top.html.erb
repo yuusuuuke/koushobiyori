@@ -45,7 +45,7 @@
         <div class="row ml-2">
           <% @follower_ranking.each do |follower_ranking|%>
             <% user = User.find(follower_ranking[0])%>
-            <div class="col-md-4">
+            <div class="col-md-2">
               <div class="row">
                 <%= link_to user_path(user) do %>
                   <%= image_tag user.get_profile_image(60,60), class:"rounded-circle" %>

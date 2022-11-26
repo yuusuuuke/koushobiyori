@@ -1,6 +1,11 @@
 class Public::FavoritesController < ApplicationController
   before_action :authenticate_user!
   
+  def show
+    @user = User.find(params[:user_id])
+    @favorites = Favorite.joins(:review).where(user_id: @user)
+  end
+  
   def create
     @review_favorite = Review.find(params[:review_id])
     @book = Book.find(params[:book_id])

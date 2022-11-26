@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get "book/review_rank/" => "books#reviews_rank", as: "book_reviews_rank"
       get "book/impressions_rank" => "books#impressions_rank"
       get "users/follower_rank" => "users#follower_rank"
+      get "favorites/:user_id/show" => "favorites#show"
       resources :users, only: [:show, :edit, :update, :update]do
         resource :relationships, only: [:create,:destroy]
         get :followings, on: :member

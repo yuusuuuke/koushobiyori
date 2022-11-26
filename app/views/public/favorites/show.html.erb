@@ -1,0 +1,73 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <div class="review_info card">
+        <h4 class="mb-2 bg-secondary text-white">いいね一覧</h4>
+        <% @favorites.each do |favorite| %>
+          <div class="card border-success mb-1">
+            <div class="card-body">
+              <% if favorite.review.user_id == current_user.id %>
+                <button type="button" class="close" aria-label="Close">
+                  <%= link_to book_review_path(favorite.review.book.id, favorite.review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                    <span aria-hidden="true">&times;</span>
+                  <% end %>
+                </button>
+              <% end %>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3 d-flex flex-column form-inline">
+                    <%= link_to book_path(favorite.review.book.id) do %>
+                      <%= image_tag favorite.review.book.item_image_url, size: "100x140", class:"mr-3" %>
+                    <% end %>
+                    <%= favorite.review.book.title%>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row border-bottom">
+                      <%= l favorite.review.created_at %>&ensp;&ensp;&ensp;
+                      <div id=<%= "favorite_btn" + favorite.review.id.to_s %>>
+                        <%= render "public/favorites/favorite", review: favorite.review, book: favorite.review.book %>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <%= favorite.review.comment%>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% favorite.review.comments.where.not(id: nil).each do |comment| %>
+                <div class="card border-primary mb-1 ml-5">
+                  <div class="card-body">
+                    <% if comment.user_id == current_user.id %>
+                      <button type="button" class="close" aria-label="Close">
+                        <%= link_to comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                          <span aria-hidden="true">&times;</span>
+                        <% end %>
+                      </button>
+                    <% end %>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-2 d-flex flex-column form-inline">
+                          <%= link_to user_path(comment.user.id) do %>
+                            <%= image_tag comment.user.get_profile_image(60,60), class:"rounded-circle" %>
+                          <% end %>
+                        </div>
+                        <div class="col-md-10">
+                          <div class="row border-bottom">
+                            <%= comment.user.nickname %>&ensp;&ensp;&ensp;<%= l comment.created_at%>
+                          </div>
+                          <div class="row">
+                            <%= comment.comment %>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

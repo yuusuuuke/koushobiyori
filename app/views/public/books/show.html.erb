@@ -62,7 +62,7 @@
               <%= form_with model:[@book, @review], url: book_reviews_path(@book), method: :post, remote: true do |f| %>
                 <div class="modal-body">
                   <div class="form_group">
-                    <%= f.text_area :comment, size:"50x5", class: "form_control"%>
+                    <%= f.text_area :comment, size:"50x5" %>
                   </div>
                 </div>
                 <div class="modal-footer">
