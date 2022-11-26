@@ -27,10 +27,10 @@ class Public::ApiSearchesController < ApplicationController
     })
     @book = Book.find_by(isbn: result.params.values)
     if @book.present?
-      redirect_to edit_admin_book_path(@book)
+      redirect_to book_path(@book)
     else
       @books = Book.create!(read(result.response.as_json[0]["params"]))
-        redirect_to edit_admin_book_path(@books), flash: { success: "#{@books.title}を追加しました。" }
+        redirect_to book_path(@books), flash: { success: "#{@books.title}を追加しました。" }
     end
   end
 
