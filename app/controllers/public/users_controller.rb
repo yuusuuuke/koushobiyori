@@ -6,7 +6,12 @@ class Public::UsersController < ApplicationController
       @user = User.find(params[:id])
       @read = @user.read_status.where(status: 1).order(created_at: :desc).limit(12)
       @reading = @user.read_status.where(status: 2).order(created_at: :desc).limit(12)
-      @wish = @user.read_status.where(status: 3).order(created_at: :desc).limit(1)
+      @wish = @user.read_status.where(status: 3).order(created_at: :desc).limit(12)
+      # @read_all = @user.read_status.where(status: 1)
+      # @reading_all = @user.read_status.where(status: 2)
+      # @wish_all = @user.read_status.where(status: 3)
+#下の１行にまとめ、Viewの変数の後ろにwhere足した。
+      @read_status = @user.read_status.all
       @reviews = @user.reviews.all.order(created_at: :desc).limit(10)
       @review_count = @reviews.group(:book_id).count
     end

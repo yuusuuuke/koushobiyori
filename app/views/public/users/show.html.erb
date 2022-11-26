@@ -27,17 +27,17 @@
         </div>
         <div class="row">
           <%= link_to "/book/#{@user.id}/read", class: "my-2 btn btn-sm btn-warning" do %>
-        	  読んだ本：<%= @read.count%>冊
+        	  読んだ本：<%= @read_status.where(status: 1).count %>冊
         	<% end %>
         </div>
         <div class="row">
           <%= link_to "/book/#{@user.id}/reading", class: "my-2 btn btn-sm btn-warning" do %>
-        	  読んでいる本：<%= @reading.count%>冊
+        	  読んでいる本：<%=@read_status.where(status: 2).count %>冊
         	<% end %>
         </div>
         <div class="row">
           <%= link_to "/book/#{@user.id}/wish", class: "my-2 btn btn-sm btn-warning" do %>
-        	  読みたい本：<%= @wish.count%>冊
+        	  読みたい本：<%= @read_status.where(status: 3).count %>冊
         	<% end %>
         </div>
         <div class="row my-2">
