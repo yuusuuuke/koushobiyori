@@ -1,20 +1,26 @@
-<h3><%= @user.nickname%>さんのフォロ一覧</h3>  <!--フォローしているユーザ一覧-->
- <table class='table table-hover table-inverse'>
-    <thead>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mt-3">
+    <h3><%= @user.nickname%>さんのフォロ一覧</h3>  <!--フォローしているユーザ一覧-->
+      <table class='table table-hover table-inverse'>
+        <thead>
           <tr>
             <th>画像</th>
             <th>ニックネーム</th>
           </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
-          <tr>
-            <td><%= image_tag user.get_profile_image(50,50)%></td>
-            <td><%= user.nickname %></td>
-            <td>フォロー数:<%= user.relationships.count %></td>
-            <td>フォロワー数:<%= user.reverse_of_relationships.count%></td>
-            <td><%= link_to "Show",user_path(user.id)%></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= image_tag user.get_profile_image(50,50)%></td>
+              <td><%= user.nickname %></td>
+              <td>フォロー数:<%= user.relationships.count %></td>
+              <td>フォロワー数:<%= user.reverse_of_relationships.count%></td>
+              <td><%= link_to "Show",user_path(user.id)%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

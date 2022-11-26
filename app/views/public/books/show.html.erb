@@ -1,24 +1,26 @@
 <!--サイドバー-->
 <div class='container'>
-  <div class='row'>
+  <div class='row mt-5'>
     <div class='col-md-3'>
       <div class="book_info d-flex flex-column form-inline">
+        <h3><b><%= @book.title %></b></h3>
         <div><%= image_tag @book.item_image_url, size: "140x180" %></div>
-        <div><%= @book.title %></div>
         <div><%= @book.author %></div>
+        <b>レビュー数：<%= @book.reviews.count %></b>
+        <b>観覧数：<%= @book.impressions_count %></b>
         <div><%= link_to "楽天Booksで購入", @book.item_url, class: "btn btn-info my-2" %></div>
       </div>
       
       <div class="read_status d-flex flex-column form-inline">
-        <% if @user_book.present? && @user_book.status == "1" %>
+        <% if @user_book.present? && @user_book.status == 1 %>
           <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-warning" %> </br>
           <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
           <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
-        <% elsif @user_book.present? && @user_book.status == "2" %>
+        <% elsif @user_book.present? && @user_book.status == 2 %>
           <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
           <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get, class:"btn btn-warning" %> </br>
           <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-outline-success" %>
-        <% elsif @user_book.present? && @user_book.status == "3" %>
+        <% elsif @user_book.present? && @user_book.status == 3 %>
           <%= link_to "読んだ", "/read_status/#{@book.id}/update/1", method: :get, class:"btn btn-outline-success" %> </br>
           <%= link_to "読んでいる", "/read_status/#{@book.id}/update/2", method: :get,class:"btn btn-outline-success" %><br>
           <%= link_to "読みたい", "/read_status/#{@book.id}/update/3", method: :get, class:"btn btn-warning" %>
@@ -105,7 +107,7 @@
         <div class="book_tag mt-3 ">
           <h4 class="bg-secondary text-white"><%= current_user.nickname %>さんのレビュー</h4>
         </div>
-        <div class="card mb-3 pd-0">
+        <div class="card border-success mb-3 pd-0">
           <div class="card-body pd-0">
             <div class="container">
               <div class="row">
@@ -131,7 +133,7 @@
 
         <h4 class="bg-secondary text-white">レビュー一覧</h4>
         <% @reviews.each do |review| %>
-          <div class="card mb-1">
+          <div class="card border-success mb-1">
             <div class="card-body">
               <div class="container">
                 <div class="row">
@@ -155,7 +157,7 @@
                   </div>
                 </div>
                 <% review.comments.where.not(id: nil).each do |comment| %>
-                  <div class="card mb-1 ml-5">
+                  <div class="card border-primary mb-1 ml-5">
                     <div class="card-body">
                       <% if comment.user_id == current_user.id %>
                         <button type="button" class="close" aria-label="Close">
@@ -180,12 +182,14 @@
                     </div>
                   </div>
                 <% end %>
-                <%= form_with model: review.comments.build, url: comments_path, method: :post, remote: true do |f| %>
-                  <%#= hidden_field_tag :review_id, review.id %>
-                  <%= f.hidden_field :review_id, value: review.id %>
-                  <%= f.text_area :comment, size:"60x2", placeholder: "コメントする" %><br>
-                  <%= f.submit "コメントする", class:"btn btn-primary" %>
-                <% end %>
+                <div class="form-group col-md-8 ml-5 mt-3">
+                  <%= form_with model: review.comments.build, url: comments_path, method: :post, remote: true do |f| %>
+                    <%#= hidden_field_tag :review_id, review.id %>
+                    <%= f.hidden_field :review_id, value: review.id %>
+                    <%= f.text_area :comment, size:"60x2", placeholder: "コメントする" %><br>
+                    <%= f.submit "コメントする", class:"btn btn-primary" %>
+                  <% end %>
+                </div>
             </div>
           </div>
         <% end %>

@@ -9,12 +9,12 @@ class Public::ReviewsController < ApplicationController
       flash[:success] = "レビューを投稿しました"
       redirect_to request.referrer
     else
-      flash.now[:danger] = "レビューを投稿できませんでした"
+      flash[:danger] = "レビューを投稿できませんでした"
       @review = Review.new
       @reviews = @book.reviews.includes(:comments)
       @user_review = Review.find_by(book_id: @book.id, user_id: current_user.id)
       @user_book = current_user.read_status.find_by(book_id: @book.id)
-      render 'public/books/show'
+      redirect_to request.referrer
     end
   end  
   
@@ -55,5 +55,4 @@ class Public::ReviewsController < ApplicationController
   def review_params
     params.require(:review).permit(:comment)
   end
-  
 end

@@ -1,0 +1,37 @@
+<div class="container mt-5">
+  <h5 class="ml-5 mt-3", style="background-color: #eee; max-width:200px; padding-left: 12px; margin-bottom: 20px;" >本の新規登録画面</h5>
+  <div class="row mt-5">
+    <%= form_with model:@book, url: admin_books_path, method: :post do |f|%>
+      <div class="col-md-8 mr-4">
+        <div class="form-group">
+          <%= f.label :item_image_url, "画像" %>
+          <%= f.file_field :item_image_url, class: "form-control-file plofile_image", accept: 'image/*' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :title, "タイトル" %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :author, "著者" %>
+          <%= f.text_field :author, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :isbn, "isbn番号" %><br>
+          <%= f.text_field :isbn, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :item_url, "本のURL" %>
+          <%= f.text_field :item_url, class: "form-control", style: "width: 400px;" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "新規作成", class: 'btn btn-success' %>
+        </div>
+        <%= link_to "保存せず一覧へ戻る", admin_books_path, class:"btn btn-primary ml-3 mt-3" %>
+      </div>
+    <%end%>
+    <div class="col-md-4 ml-4">
+      <h5 class="ml-5 mt-3", style="background-color: #eee; max-width:250px; padding-left: 12px; margin-bottom: 20px;" >API検索から新規追加</h5>
+      <%= render "admin/api_searches/api_search" %>
+    </div>
+  </div>
+</div>

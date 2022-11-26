@@ -1,34 +1,43 @@
-<div class="container">
-<h2><%= @word%>の検索結果</h2>
+<div class="container mt-5">
+  <h2 class="card-title bg-secondary text-white"><b>『<%= @word %>』の検索結果<b></h2>
   <div class="search_form row">
-    <% unless @books.blank? %>
-      <% @books.each do |book| %>
-        <div class="col-2 mb-2 d-flex flex-column form-inline">
-          <%= link_to book_path(book), method: :get do%>
-            <%= image_tag book.item_image_url, size: "100x140"%>
-          <% end %>
-          <%= link_to book_path(book), method: :get do%>
-            <%= book.title %>
-          <% end%>
-          <%= book.author %>
+    <% if user_signed_in? && current_user.nickname != "guestuser"%>
+      <% unless @books.blank? %>
+        <% @books.each do |book| %>
+          <div class="col-2 mb-2 d-flex flex-column form-inline">
+            <%= link_to book_path(book), method: :get do%>
+              <%= image_tag book.item_image_url, size: "100x140"%>
+            <% end %>
+            <%= link_to book_path(book), method: :get do%>
+              <%= book.title %>
+            <% end%>
+            <%= book.author %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="api_search_form row mx-auto">
+          <h5>
+            <b>検索された本はまだ登録がありません。<br>
+            お手数ですがこちらから再度検索し、本を登録してください。
+            </b>
+          </h5>
+          <div class="search_form col-10 mt-3">
+            <%= render "public/api_searches/api_search"%>
+          </div>
+          <em class="mt-3">
+            ※こちらは楽天APIを利用し、本の情報を取得します。<br>
+             検索ワードは<em>『本のタイトル』<em>のみ検索可能です。<br>
+             検索結果の表示上限は３０件です。<br>
+             本のタイトルと巻数で検索される方は、間にスペースは入れず検索してください。
+          </em>
         </div>
       <% end %>
-    </div>
-  <% else %>
-    <div class="api_search_form row">
-      <h5>
-        <b>検索された本はまだ登録されていません。<br>
-        こちらから再度検索して、本を登録してください。
-        </b>
-      </h5>
-      <div class="search_form col-10 mt-3">
-        <%= render "public/api_searches/api_search"%>
-      </div>
-      <em>
-        ※こちらは楽天APIを利用し、本の情報を取得します。<br>
-         検索結果の表示上限は３０件です。<br>
-         本のタイトルと巻数で検索される方は、間にスペースは入れず検索してください。
-      </em>
-    </div>
-  <% end %>
+    <% else %>
+      <h5><b>
+        検索結果はありませんでした。<br>
+        ゲストユーザは本の新規登録権限がありません。<br>
+        本の登録機能は、新規会員登録をしてからご利用ください。
+      </b></h5>
+    <% end %>
+  </div>
 </div>

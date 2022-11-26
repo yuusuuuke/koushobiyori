@@ -3,7 +3,7 @@ class CreateReadStatuses < ActiveRecord::Migration[6.1]
     create_table :read_statuses do |t|
       t.integer :user_id
       t.integer :book_id
-      t.string :status
+      t.integer :status
       t.timestamps
     end
   end

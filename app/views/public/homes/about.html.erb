@@ -1,27 +1,42 @@
 <div class="container">
   <div class="row">
-    <div class='mx-auto col-11 col-sm-10 col-lg-8 col-xl-6'>
-      <h1>好書日和とは？</h1>
-      <p>好書日和は『読んでいる本』、『読みたい本』、『読み終わった本』
-      に分けて読書の記録ができます。
-      また、他の読書家とコミュケーションを取ることができます。
-      新たな本との出いにご活用ください。</p>
+    <div class='mx-auto col-md-8 col-sm-8 mt-5'>
+      <div class="card">
+        <h1 class="card-title"><b>好書日和とは？</b></h1>
+        <div cass="card-body">
+          <p class="px-4">
+            好書日和は、本の記録サイトです。<br>
+            『読んでいる本』、『読みたい本』、『読み終わった本』に分けてご自宅の本棚のようにサイト上で本の情報を記録できます。<br>
+            また、サイトを利用されている他の読書家の方達の本棚を覗けたり、レビュー機能やコメント機能を使いコミュケーションを取ることができます。<br>
+            ぜひ新たな本との出いにご活用ください。
+          </p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="row">
+  <div class="row mt-5">
     <div class='mx-auto col-11 col-sm-10 col-lg-8 col-xl-6'>
       <div class="btn-wrapper col-10 mx-auto">
         <div class="row">
-          <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+          <div class="card">
+            <div class="card-body">
+              <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+              <em>
+                <b>
+                 ※ゲストログインでは、レビューやコメント機能、本のお気に入り機能など試すことができますが、
+                 情報は定期的に削除されます。
+                 当サイトをご利用になられる場合は、ぜひ新規会員登録してからご利用ください。
+                </b>
+              </em>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <%= link_to 'ログイン',new_user_session_path, class: "btn btn-info btn-sm btn-block mb-3 sign_in" %>
         </div>
         <div class="row">
-          <%= link_to 'Log in',new_user_session_path, class: "btn btn-info btn-sm btn-block mb-3 sign_in" %>
-        </div>
-        <div class="row">
-          <%= link_to 'Sign Up',new_user_registration_path, class: "btn btn-success btn-sm btn-block sign_up" %>
+          <%= link_to '新規会員登録',new_user_registration_path, class: "btn btn-success btn-sm btn-block sign_up" %>
         </div>
       </div>
     </div>

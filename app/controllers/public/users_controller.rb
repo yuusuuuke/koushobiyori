@@ -1,4 +1,7 @@
 class Public::UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :ensure_user, only: [:edit, :update]
+
     def show
       @user = User.find(params[:id])
       @read = @user.read_status.where(status: 1).order(created_at: :desc).limit(12)
@@ -32,6 +35,10 @@ class Public::UsersController < ApplicationController
       @user = User.find(params[:id])
       @users = @user.followers
     end
+    
+    def follower_rank
+      @follower_ranking = Relationship.group(:followed_id).order(count_all: :desc).limit(100).count
+    end
   
     def confirm
     end
@@ -48,6 +55,11 @@ class Public::UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:nickname, :profile_image, :introduction)
     end
-
-
+    
+    def ensure_user
+      @user = User.find(params[:id])
+      if @user.nickname == "guestuser" || @user != current_user
+        redirect_to user_path(current_user), flash: { danger: "ゲストユーザーまたは他のはユーザー編集権限がありません"}
+      end
+    end
 end

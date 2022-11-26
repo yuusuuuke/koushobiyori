@@ -7,26 +7,17 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Admin.create!(email: 'admin@admin', password: 'adminadmin')
+Admin.create!(email: 'admin@admin.', password: 'adminadmin')
 
-User.create!(email: "y@y", password: "yyyyyy", nickname: "yyyyyy")
-  
-User.create!(email: "k@k", password: "kkkkkk", nickname: "kkkkkk")
+User.create!(email: "test@example.com", password: "tttttt", nickname: "test")
+User.create!(email: "y@y", password: "yyyyyy", nickname: "ゆすけ")
+User.create!(email: "k@k", password: "kkkkkk", nickname: "けんき")
+User.create!(email: "n@n", password: "nnnnnn", nickname: "野比のび太")
+User.create!(email: "ka@ka", password: "kakaka", nickname: "伊藤カイジ")
+User.create!(email: "ya@ya", password: "yayaya", nickname: "夜神月")
+User.create!(email: "cha@cha", password: "chacha", nickname: "チャルロス聖")
+User.create!(email: "i@i", password: "iiiiii", nickname: "碇シンジ")
 
-ReadStatus.create!( #いらない
-  [
-    {
-      status: "read"
-    },
-    {
-      status: "reading"
-    },
-    {
-      status: "wish"
-    }
-  ]
-)
-  
 Category.create!(
   [
     {

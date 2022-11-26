@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
-  validates :nickname, presence: true, length: { minimum: 2, maximum: 30 }
+  validates :nickname, presence: true, uniqueness: true, length: { minimum: 2, maximum: 30 }
   validates :introduction, length: { maximum: 100}
   has_one_attached :profile_image
   
@@ -44,7 +44,7 @@ class User < ApplicationRecord
   end
   
 # 検索機能
-  def self.looks(search, word)
+  def self.looks(_search, word)
       @user = User.where("nickname LIKE?","%#{word}%")
   end
   

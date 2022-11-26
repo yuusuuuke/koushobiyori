@@ -1,97 +1,99 @@
- <header class="shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
+<header class="shadow-sm sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon "></span>
+    </button>
 <!--管理者がログインしているとき-->
-        <% if admin_signed_in? %>
-          <span>書好日和</span>
-        <% else %>
-          <font size="10">
-            <%= link_to "好書日和", root_path, class: 'nav-link text-dark' %>
-          </font>
+    <% if user_signed_in? %>
+      <font size="5">
+        <%= link_to root_path, class: 'nav-link text-dark ml-5 mr-3', style: "font-weight: bold;" do %>
+          好書<br>日和
         <% end %>
-<!--会員がログインしているとき-->
-        <% if user_signed_in? %>
-          <div class="text-center">
-            <table>
-              <tr>
-                <td>
-                  <%= link_to user_path(current_user), class:"mr-2" do%>
-                    <%= image_tag current_user.get_profile_image(70,70),class:"rounded-circle" %>
-                  <% end %>
-                </td>
-                <td>ようこそ、<br><%= current_user.nickname %>さん!</td>
-              </tr>
-            </table>
-            
-            <b></b>
-          </div>
-        <% end %>
-
-        <div class="col-md-12 col-sm-8">
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto form-inline">
-<!--会員がログインしているとき-->
-              <% if user_signed_in? %>
-                <li>
-                  <%= render "public/searches/search"%>
-                </li>
-                <li>
-                  <%= link_to '本の一覧', books_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-                <li>
-                  <%= link_to 'マイページ', user_path(current_user), class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-                <li>
-                  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-<!--管理者がログインしているとき-->
-              <% elsif admin_signed_in? %>
-                <li>
-                  <%= render "admin/searches/search"%>
-                </li>
-                <li>
-                  <%= link_to '会員一覧', admin_users_path, class: "btn btn-outline-dark mx-2 mt-3 mb-3" %>
-                </li>
-                <li>
-                  <%= link_to '本の一覧', admin_books_path, class: "btn btn-outline-dark mx-2 mt-3 mb-3" %>
-                </li>
-                <li>
-                  <%= link_to '本カテゴリ一覧', admin_categories_path, class: "btn btn-outline-dark mx-2 mt-3 mb-3" %>
-                </li>
-                <li>
-                  <%= link_to 'レビュー一覧', admin_reviews_path, class: "btn btn-outline-dark mx-2 mt-3 mb-3" %>
-                </li>
-                <li>
-                  <%= link_to 'コメント一覧', admin_comments_path, class: "btn btn-outline-dark mx-2 mt-3 mb-3" %>
-                </li>
-                <li>
-                  <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark mx-2 mt-3 mb-3" %>
-                </li>
-<!--ログインしていないとき-->
-              <% else %>
-                <li>
-                  <%= link_to 'about', about_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-                <li>
-                </li>
-                <li>
-                  <%= link_to '新規登録', new_user_registration_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-                <li>
-                  <%= link_to 'ログイン', user_session_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-                <li>
-                  <%= link_to '管理者ログイン', admin_session_path, class: "btn btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
+      </font>
+    <% else %>
+      <font size="5">
+        <div class='nav-link text-dark ml-3 mr-3', style="font-weight: bold;">
+          <p>好書<br>日和</p>
         </div>
+      </font>
+    <% end %>
+<!--会員がログインしているとき-->
+    <% if user_signed_in? %>
+      <%= link_to user_path(current_user) do%>
+        <%= image_tag current_user.get_profile_image(80,80),class:"rounded-circle" %>
+      <% end %>
+      <div class="col-md-2 pl-0 ml-0">
+        <b>
+          ようこそ、<br>
+          <%= current_user.nickname %>さん!
+        </b>
       </div>
-    </nav>
-  </header>
+    <% end %>
+
+    <div class="col-md-8 col-sm-6 ml-auto">
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto form-inline">
+<!--会員がログインしているとき-->
+          <% if user_signed_in? %>
+            <li>
+              <%= render "public/searches/search"%>
+            </li>
+            <li>
+              <%= link_to '本の一覧', books_path, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+            <li>
+              <%= link_to 'マイページ', user_path(current_user), class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+            <li>
+              <%= link_to 'トップページ', root_path, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+            <li>
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+<!--管理者がログインしているとき-->
+          <% elsif admin_signed_in? %>
+            <li>
+              <%= render "admin/searches/search"%>
+            </li>
+            <li>
+              <%= link_to '会員一覧', admin_users_path, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+            <li>
+              <%= link_to '本の一覧', admin_books_path, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+            <li>
+              <%= link_to '本の追加', new_admin_book_path, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+            <li>
+              <%= link_to '本カテゴリ一覧', admin_categories_path, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+            <li>
+              <%= link_to 'レビュー一覧', admin_reviews_path, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+            <li>
+              <%= link_to 'コメント一覧', admin_comments_path, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+            <li>
+              <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-sm btn-outline-dark mx-2 mt-3 mb-3" %>
+            </li>
+<!--ログインしていないとき-->
+          <% else %>
+            <li>
+              <%= link_to 'about', about_path, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+            <li>
+              <%= link_to '新規登録', new_user_registration_path, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+            <li>
+              <%= link_to 'ログイン', user_session_path, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+            <li>
+              <%= link_to '管理者ログイン', admin_session_path, class: "btn btn-sm btn-outline-dark ml-2 mt-3 mb-3", style:"margin-right:20px;" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

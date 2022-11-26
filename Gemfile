@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-rails'
 end
 
 group :development do
@@ -57,12 +58,15 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'net-smtp'
 gem "net-pop"
 gem "net-imap"
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 gem 'rakuten_web_service'
 gem 'devise'
 gem 'kaminari','~> 1.2.1'
 gem 'enum_help'
 gem 'impressionist'
 gem 'dotenv-rails'
+gem 'rails-i18n'
 group :production do
   gem 'mysql2'
 end

@@ -1,5 +1,6 @@
 class Admin::ApiSearchesController < ApplicationController
-   before_action :authenticate_admin!
+  before_action :authenticate_admin!
+  
   def search_result
 #空の配列を作成
     @books = []
@@ -23,12 +24,13 @@ class Admin::ApiSearchesController < ApplicationController
     result = RakutenWebService::Books::Book.search({
       isbn: params[:isbn],
     })
-    book_last = Book.last
-    @book = Book.find_or_create_by!(read(result.response.as_json[0]["params"]))
-    if book_last.id < @book.id || Book.blank?
-      redirect_to edit_admin_book_path(@book), flash: { success: "#{@book.title}本を追加しました" }
-    else
+    # binding.pry
+    @book = Book.find_by(isbn: result.params.values)
+    if @book.present?
       redirect_to edit_admin_book_path(@book)
+    else
+      @books = Book.create!(read(result.response.as_json[0]["params"]))
+        redirect_to edit_admin_book_path(@books), flash: { success: "#{@books.title}を追加しました。" }
     end
   end
 

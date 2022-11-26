@@ -1,7 +1,7 @@
 <% if admin_signed_in? %>
   <div class = api_search_form >
     <%= form_tag admin_api_search_path, method: :get do %>
-      <%= text_field_tag :title, @title %>
+      <%= text_field_tag :title, @title, style: "border-radius: 20px;" %>
       <%= button_tag "追加する本を探す", class: "btn btn-primary" %>
     <% end %>
   </div>

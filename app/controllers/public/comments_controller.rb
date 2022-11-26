@@ -8,21 +8,21 @@ class Public::CommentsController < ApplicationController
       flash[:success] = "コメントしました"
       redirect_to book_path(@book)
     else
-      flash.now[:danger] = "コメントできませんでした"
+      flash[:danger] = "コメントできませんでした"
       @review = Review.new
       @reviews = @book.reviews.includes(:comments)
       @user_review = Review.find_by(book_id: @book.id, user_id: current_user.id)
-       @user_book = current_user.read_status.find_by(book_id: @book.id)
-      render 'public/books/show'
+      @user_book = current_user.read_status.find_by(book_id: @book.id)
+      redirect_to request.referrer
     end
   end
   
   def destroy
-    @comment = Comment.find(params[:id])
+    @comment = current_user.comments.find(params[:id])
     @book = @comment.review.book
     if @comment.delete
       flash[:success] = "コメントを削除しました"
-      redirect_to book_path(@book)
+      redirect_to request.referrer
     else
       flash.now[:danger] = "コメントを削除できませんでした"
       @review = Review.new
@@ -34,7 +34,6 @@ class Public::CommentsController < ApplicationController
   end
 
   private
-  
   def comment_params
     params.require(:comment).permit(:comment, :review_id)
   end

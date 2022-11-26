@@ -1,7 +1,7 @@
-<% if user_signed_in? %>
+<% if user_signed_in? && current_user.nickname != "guestuser" %>
   <div class = api_search_form >
     <%= form_tag api_search_path, method: :get do %>
-      <%= text_field_tag :title, @title %>
+      <%= text_field_tag :title, @title, style: "border-radius: 20px;" %>
       <%= button_tag "追加する本を探す", class: "btn btn-primary" %>
     <% end %>
   </div>

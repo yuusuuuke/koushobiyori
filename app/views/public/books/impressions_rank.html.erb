@@ -5,15 +5,15 @@
       <div class="card-body">
         <div class="col-md-12">
           <% @categories.each do |category|%>
-            <%= link_to category.name, books_path(category_id: category.id), class: "mx-1 my-1 btn btn-sm btn-warning" %>
+            <%= link_to category.name, book_impressions_rank_path(category_id: category.id), class: "mx-1 my-1 btn btn-sm btn-warning" %>
           <% end %>
         </div>
       </div>
     </div>
   </div>
-  <h5 class="bg-secondary text-white"><b>本の一覧</b></h5>
+  <h5 class="bg-secondary text-white"><b>注目の本Top100</b></h5>
   <div class="row">
-    <% @books.each do |book| %>
+    <% @count_books.each do |book| %>
       <div class="col-md-2 mb-2 d-flex flex-column form-inline">
         <%= link_to book_path(book) do%>
           <%= image_tag book.item_image_url, size: "100x140"%>

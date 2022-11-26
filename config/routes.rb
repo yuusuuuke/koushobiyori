@@ -5,12 +5,12 @@ Rails.application.routes.draw do
     sessions: "admin/sessions"
   }
     namespace :admin do
-      get '/' =>'homes#top'
-      get "search" => "searches#search"
+      get '/' => "users#index"
+      get "search" => "searches#search_result"
       get "api_search" => "api_searches#search_result"
       post "api_book_create" => "api_searches#create"
       resources :users, only:[:index, :edit, :create, :update, :destroy]
-      resources :books, only:[:show, :index, :edit, :create, :update, :destroy]
+      resources :books, only:[:new, :show, :index, :edit, :create, :update, :destroy]
       resources :categories, only:[:index, :edit, :create, :update, :destroy]
       resources :reviews, only:[:index, :destroy]
       resources :comments,only:[:index, :destroy]
@@ -35,6 +35,9 @@ Rails.application.routes.draw do
       get "book/:user_id/reading" => "books#reading"
       get "book/:user_id/wish" => "books#wish"
       get "book/:user_id/reviews" => "books#reviews"
+      get "book/review_rank/" => "books#reviews_rank", as: "book_reviews_rank"
+      get "book/impressions_rank" => "books#impressions_rank"
+      get "users/follower_rank" => "users#follower_rank"
       resources :users, only: [:show, :edit, :update, :update]do
         resource :relationships, only: [:create,:destroy]
         get :followings, on: :member

@@ -1,5 +1,7 @@
 class Public::ApiSearchesController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_guest_user, only: [:create, :search_result]
+  
   def search_result
 #空の配列を作成
     @books = []
@@ -23,12 +25,12 @@ class Public::ApiSearchesController < ApplicationController
     result = RakutenWebService::Books::Book.search({
       isbn: params[:isbn],
     })
-    book_last = Book.last
-    @book = Book.find_or_create_by!(read(result.response.as_json[0]["params"]))
-    if book_last.id < @book.id || Book.blank?
-      redirect_to book_path(@book), flash: { success: "#{@book.title}を追加しました" }
+    @book = Book.find_by(isbn: result.params.values)
+    if @book.present?
+      redirect_to edit_admin_book_path(@book)
     else
-      redirect_to book_path(@book)
+      @books = Book.create!(read(result.response.as_json[0]["params"]))
+        redirect_to edit_admin_book_path(@books), flash: { success: "#{@books.title}を追加しました。" }
     end
   end
 
@@ -48,5 +50,12 @@ class Public::ApiSearchesController < ApplicationController
     item_image_url: result["mediumImageUrl"].gsub('?_ex=120x120', ''),
     category_id: category&.id
     }
+  end
+  
+  def ensure_guest_user
+    @user = current_user
+    if @user.nickname == "guestuser"
+      redirect_to user_path(current_user), flash: { danger: "ゲストユーザーは本の登録権限がありません。アカウント作成後にご利用ください。"}
+    end
   end
 end

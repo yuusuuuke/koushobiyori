@@ -1,5 +1,6 @@
 class Public::FavoritesController < ApplicationController
-
+  before_action :authenticate_user!
+  
   def create
     @review_favorite = Review.find(params[:review_id])
     @book = Book.find(params[:book_id])

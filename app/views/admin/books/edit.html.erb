@@ -1,27 +1,32 @@
-<div class="container">
-  <h5><%= @book.title%>の編集画面</h5>
+<div class="container mt-5">
+  <h5 class='mx-5 mt-5 mb-3 text-center', style="background-color: #eee; max-width:300px;">『<%= @book.title%>』の編集画面</h5>
   <div class="row mt-5">
     <%= form_with model:@book, url: admin_book_path, method: :patch do |f|%>
       <div class="col-md8">
         <div class="form-group">
           <%= image_tag @book.item_image_url, size: "100x140" %>
-          <%= f.file_field :item_image_url, class: "form-control-file plofile_image", accept: 'image/*' %>
+          <%= f.text_area:item_image_url, class: "form-control-file plofile_image", accept: 'image/*' %>
         </div>
         <div class="form-group">
           <%= f.label :title, "タイトル" %>
-          <%= f.text_field :title, class: "form-control " %>
+          <%= f.text_field :title, class: "form-control" %>
         </div>
         <div class="form-group">
           <%= f.label :author, "著者" %>
-          <%= f.text_field :author, class: "form-control " %>
+          <%= f.text_field :author, class: "form-control" %>
         </div>
         <div class="form-group">
           <%= f.label :isbn, "isbn番号" %><br>
-          <%= @book.isbn %>
+          <%= f.text_field :isbn, class: "form-control" %>
         </div>
         <div class="form-group">
           <%= f.label :item_url, "本のURL" %>
           <%= f.text_field :item_url, class: "form-control", style: "width: 400px;" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :category_id, "現在のカテゴリー："%>
+          <%= @book_category_name.name %><br>
+          <%= f.collection_select :category_id, @categories, :id, :name, include_blank: "選択してください", class: "form-control category_id" , required: true %>
         </div>
         <div class="form-group">
           <%= f.submit "変更を保存", class: 'btn btn-success' %>
@@ -29,7 +34,7 @@
           <%= link_to "削除", admin_book_path, method: :delete, class:"btn btn-danger ml-3", data: {confirm: "本当に削除しますか?"} %>
         </div>
       </div>
-    <%end%>
+    <% end %>
   </div>
 </div>
 

@@ -1,10 +1,12 @@
 class Admin::CommentsController < ApplicationController
+  before_action :authenticate_admin!
   
   def index
     if params[:create_latest]
-      @reviews = Review.joins(:comments).order("comments.created_at desc")
+      # binding.pry
+      @reviews = Review.joins(:comments).group(:id).order("comments.created_at desc")
     else
-      @reviews = Review.joins(:comments)
+      @reviews = Review.joins(:comments).group(:id)
     end
   end
   

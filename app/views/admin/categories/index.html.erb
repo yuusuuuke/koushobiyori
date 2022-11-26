@@ -1,9 +1,13 @@
 <div class="container">
   <div class="row">
-    <h5 class='mx-5 my-5', style="background-color: #eee; width:220px; padding-left: 12px; margin-bottom: 40px;">
+    <h5 class='mx-5 mt-5 mb-3 text-center', style="background-color: #eee; width:220px;">
       <b>カテゴリ一覧/追加</b>
     </h5>
   </div>
+  <%= link_to "楽天BooksAPIカテゴリー検索（外部ページ）",
+      'https://rakuten-api-documentation.antoniotajuelo.com/ja/rakuten-books/booksgenre-search',
+      class: "btn btn-sm btn-primary mb-3"
+    %>
   <div class="row">
     <%= render "admin/shared/error_messages", resource: @category %>
     <%= form_with model: @category, url:admin_categories_path do |f| %>

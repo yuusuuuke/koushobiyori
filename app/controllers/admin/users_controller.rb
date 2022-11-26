@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   
   def index
-    @users =User.page(params[:page]).per(10)
+    @users =User.order(created_at: :desc).page(params[:page]).per(30)
   end
 
   def show
@@ -23,9 +23,21 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to edit_admin_user_path(@user), notice: "会員情報を編集しました。"
+      redirect_to edit_admin_user_path(@user), flash: { success: "会員情報を更新しました。"}
     else
+      flash.now[:danger] = "会員情報を更新できませんでした"
       render :edit
+    end
+  end
+  
+  def destroy
+    @user = User.find(params[:id])
+    if @user.nickname == "guestuser"
+      @user.destroy
+      flash[:success] = "guestuserを削除しました"
+      redirect_to "index"
+    else
+      render request.referrer
     end
   end
 

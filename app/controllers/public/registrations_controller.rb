@@ -62,12 +62,12 @@ class Public::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   
-  def after_sign_in_path_for(resource)
-     edit_user_path
+  def after_sign_in_path_for(_resource)
+     edit_user_path(current_user)
   end
 
-  def after_sign_out_path_for(resource)
-    root_path
+  def after_sign_out_path_for(_resource)
+    about_path
   end
   
   protected

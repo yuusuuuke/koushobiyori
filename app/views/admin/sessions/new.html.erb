@@ -1,7 +1,7 @@
 <div class='container'>
   <div class='row'>
-    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0">
-      <h2>管理者ログイン</h2>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mt-5">
+      <h2 class="mt-3 text-center", style="background-color: #eee; max-width: 250px;">管理者ログイン</h2>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="field">
           <%= f.label :email, "メールアドレス" %><br />
@@ -18,7 +18,7 @@
         <!--  </div>-->
         <!--<#% end %>-->
         <div class="actions">
-          <%= f.submit "ログイン", class: "btn btn-primary" %>
+          <%= f.submit "ログイン", class: "btn btn-primary mt-3" %>
         </div>
       <% end %>
       <%= render "admin/shared/links" %>

@@ -5,20 +5,22 @@
       <div class="card-body">
         <div class="col-md-12">
           <% @categories.each do |category|%>
-            <%= link_to category.name, books_path(category_id: category.id), class: "mx-1 my-1 btn btn-sm btn-warning" %>
+            <%= link_to category.name, book_reviews_rank_path(category_id: category.id), class: "mx-1 my-1 btn btn-sm btn-warning" %>
           <% end %>
         </div>
       </div>
     </div>
   </div>
-  <h5 class="bg-secondary text-white"><b>本の一覧</b></h5>
+  <h5 class="bg-secondary text-white"><b>レビューの多い本Top100</b></h5>
   <div class="row">
-    <% @books.each do |book| %>
+    <% @count_reviews.each do |review| %>
+    <!--<%# binding.pry %>-->
+    <% book = Book.find(review[0]) %>
       <div class="col-md-2 mb-2 d-flex flex-column form-inline">
-        <%= link_to book_path(book) do%>
+        <%= link_to book_path(book.id) do%>
           <%= image_tag book.item_image_url, size: "100x140"%>
         <% end %>
-        <%= link_to book_path(book) do%>
+        <%= link_to book_path(book.id) do%>
           <%= book.title%>
         <% end %>
       </div>

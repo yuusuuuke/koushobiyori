@@ -1,13 +1,12 @@
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <h5 class="ml-5 mt-3", style="background-color: #eee; width:150px; padding-left: 12px; margin-bottom: 20px;"><b>会員一覧</b></h5>
-  </div>
-  <div class="row">
     <table class='table table-sm'>
       <thead style="background-color: #eee;">
+        <tr>
           <th>会員ID</th>
           <th>画像</th>
-          <th>ニックネーム</th>
+          <th>ニックネーム/会員登録日</th>
           <th>メールアドレス</th>
           <th>会員ステータス</th>
         </tr>
@@ -20,8 +19,9 @@
               <%= image_tag user.get_profile_image(50,50) %>
               <% end %> 
             </td>
-            <td><%= link_to edit_admin_user_path(user.id),class: 'text-dark' do %>
-              <u><%= user.nickname %></u>
+            <td>
+              <%= link_to edit_admin_user_path(user.id),class: 'text-dark' do %>
+                <%= user.nickname %>/<%= l user.created_at%>
               <% end %>
             </td>
             <td><%= user.email %></td>

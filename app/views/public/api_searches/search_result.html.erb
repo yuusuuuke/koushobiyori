@@ -1,8 +1,8 @@
 <!--検索結果を表示-->
-<div class="container">
-  <h2><%= %>検索結果</h2>
+<div class="container mt-5">
+  <h2 class="card-title bg-secondary text-white">『<%= @title %>』の検索結果</h2>
   <div class="api_search_form row">
-    <% if @books %>
+    <% if @books.present? %>
       <% @books.each do |book| %>
         <div class="col-md-2 mb-2">
           <div class="book_date d-flex flex-column form-inline">
@@ -15,10 +15,10 @@
         </div>
       <% end %>
     <% else %>
-      <div class="col-md-10">
+      <div class="else_search">
         <h5>検索結果はありません</h5>
         <h5><b>検索ワードを詳細にしてください</b></h5>
-        <render "public/api_searches/api_search">
+        <%= render "public/api_searches/api_search" %>
       </div>
     <% end %>
   </div>

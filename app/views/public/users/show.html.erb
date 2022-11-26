@@ -2,56 +2,67 @@
 <div class='container'>
   <div class='row'>
     <div class='col-md-3 mt-5'>
-      <div class="info d-flex flex-column form-inline">
-        <table>
-          <tr>
-            <td><%= image_tag @user.get_profile_image(100,100),class:"rounded-circle" %></td>
-          </tr>
-          <tr>
-        	  <th>ニックネーム</th>
-        	  <th><%= @user.nickname %></th>
-          </tr>
-          <tr>
-        	  <th>introduction</th>
-        	  <th><%= @user.introduction %></th>
-        	</tr>
-        	<tr>
-        	  <th>
-        	    <%= link_to followings_user_path(@user.id) do%>
-      	        フォロー:<%= @user.relationships.count %>
-      	      <% end %>
-      	    </th>
-        	</tr>
-        	<tr>
-        	  <th>
-        	    <%= link_to followers_user_path(@user.id) do %>
-      	        フォロワー:<%= @user.reverse_of_relationships.count %>
-      	      <% end %>
-      	    </th>
-      	  </tr>
-      	   <tr>
-              <th>
-                <% unless @user == current_user %>
-                  <% if current_user.following?(@user) %>
-                    <%= link_to user_relationships_path(@user), method: :delete do %>
-                      <button class="btn btn-danger btn-sm">フォローを外す</button>
-                    <% end %>
-                  <% else %>
-                    <%= link_to user_relationships_path(@user), method: :post do%>
-                      <button class="btn btn-primary btn-sm">フォロー</button> 
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </th>
-          </tr>
-        </table>
-      </div>
-      <div class='row'>
-        <% if @user == current_user %>
-          <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
-            <i class="fas fa-user-cog"></i>
+      <div class="info d-flex flex-column">
+        <div class="row">
+          <%= image_tag @user.get_profile_image(100,100),class:"rounded-circle" %>
+        </div>
+        <div class="row">
+          <b>・ニックネーム</b>
+        </div>
+        <div class="row ml-2">
+          <b><%= @user.nickname%></b>
+        </div>
+        <div class="row">
+          <b>・自己紹介</b>
+        </div>
+        <div class="row ml-2">
+          <b><%= @user.introduction %></b>
+        </div>
+        <div class='row my-3'>
+          <% if @user == current_user && @user.nickname != "guestuser" %>
+            <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block", style:"max-width: 200px;" do %>
+              <i class="fas fa-user-cog"></i>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
+        <div class="row">
+          <%= link_to "/book/#{@user.id}/read", class: "my-2 btn btn-sm btn-warning" do %>
+        	  読んだ本：<%= @read.count%>冊
+        	<% end %>
+        </div>
+        <div class="row">
+          <%= link_to "/book/#{@user.id}/reading", class: "my-2 btn btn-sm btn-warning" do %>
+        	  読んでいる本：<%= @reading.count%>冊
+        	<% end %>
+        </div>
+        <div class="row">
+          <%= link_to "/book/#{@user.id}/wish", class: "my-2 btn btn-sm btn-warning" do %>
+        	  読みたい本：<%= @wish.count%>冊
+        	<% end %>
+        </div>
+        <div class="row my-2">
+          <%= link_to followings_user_path(@user.id), class: "btn btn-sm btn-primary" do%>
+      	    フォロー:<%= @user.relationships.count %>
+      	  <% end %>
+        </div>
+        <div class="row my-2">
+          <%= link_to followers_user_path(@user.id), class: "btn btn-sm btn-primary" do %>
+      	    フォロワー:<%= @user.reverse_of_relationships.count %>
+      	  <% end %>
+        </div>
+        <div class="row my-2">
+          <% unless @user == current_user %>
+            <% if current_user.following?(@user) %>
+              <%= link_to user_relationships_path(@user), method: :delete do %>
+                <button class="btn btn-danger btn-sm">フォローを外す</button>
+              <% end %>
+            <% else %>
+              <%= link_to user_relationships_path(@user), method: :post do%>
+                <button class="btn btn-primary btn-sm">フォロー</button> 
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
 <!--サイドバーend-->
@@ -72,8 +83,6 @@
               </div>
             <% end %>
           </div>
-        </div>
-        <div class="text-right">
           <%= link_to "読んだ本一覧", "/book/#{@user.id}/read", method: :get, class:"btn btn-outline-success mb-3" %>
         </div>
           
@@ -91,9 +100,7 @@
               </div>
             <% end %>
           </div>
-        </div>
-        <div class="text-right">
-          <%= link_to "読んでいる本一覧", "/book/#{@user.id}/reading", method: :get, class:"btn btn-outline-success mb-3" %>
+            <%= link_to "読んでいる本一覧", "/book/#{@user.id}/reading", method: :get, class:"btn btn-outline-success mb-3" %>
         </div>
           
         <div class="wish_info card">
@@ -110,15 +117,12 @@
               </div>
             <% end %>
           </div>
-        </div>
-        <div class="text-right">
           <%= link_to "読みたい本一覧", "/book/#{@user.id}/wish", method: :get, class:"btn btn-outline-success mb-3" %>
         </div>
-        
         <div class="review_info card">
           <h4 class="mb-2 bg-secondary text-white">レビュー</h4>
           <% @reviews.each do |review| %>
-            <div class="card mb-1">
+            <div class="card border-success mb-1">
               <div class="card-body">
                 <% if review.user_id == current_user.id %>
                   <button type="button" class="close" aria-label="Close">
@@ -146,7 +150,7 @@
                   </div>
                 </div>
                 <% review.comments.where.not(id: nil).each do |comment| %>
-                  <div class="card mb-1 ml-5">
+                  <div class="card border-primary mb-1 ml-5">
                     <div class="card-body">
                       <% if comment.user_id == current_user.id %>
                         <button type="button" class="close" aria-label="Close">
@@ -178,10 +182,8 @@
               </div>
             </div>
           <% end %>
-        </div>
-        <div class="text-right">
           <%= link_to "レビュー一覧", "/book/#{@user.id}/reviews", method: :get, class:"btn btn-outline-success mb-3" %>
-        <div>
+        </div>
       </div>
     </div>
   </div>
