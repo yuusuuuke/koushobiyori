@@ -55,5 +55,4 @@ class User < ApplicationRecord
       user.nickname = "guestuser"
     end
   end
-  
 end

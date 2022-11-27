@@ -3,7 +3,7 @@ class Public::FavoritesController < ApplicationController
   
   def show
     @user = User.find(params[:user_id])
-    @favorites = Favorite.joins(:review).where(user_id: @user)
+    @favorites = Favorite.joins(:review).where(user_id: @user).order(created_at: :desc)
   end
   
   def create

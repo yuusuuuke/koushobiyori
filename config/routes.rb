@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       get "api_search" => "api_searches#search_result"
       post "api_book_create" => "api_searches#create"
       resources :users, only:[:index, :edit, :create, :update, :destroy]
-      resources :books, only:[:new, :show, :index, :edit, :create, :update, :destroy]
+      resources :books, only:[:new, :index, :edit, :create, :update, :destroy]
       resources :categories, only:[:index, :edit, :create, :update, :destroy]
       resources :reviews, only:[:index, :destroy]
       resources :comments,only:[:index, :destroy]

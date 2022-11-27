@@ -24,7 +24,6 @@ class Admin::ApiSearchesController < ApplicationController
     result = RakutenWebService::Books::Book.search({
       isbn: params[:isbn],
     })
-    # binding.pry
     @book = Book.find_by(isbn: result.params.values)
     if @book.present?
       redirect_to edit_admin_book_path(@book)
@@ -35,7 +34,7 @@ class Admin::ApiSearchesController < ApplicationController
   end
 
   private
-#「楽天APIのデータから必要なデータを絞り込む」、且つ「対応するカラムにデータを格納する」メソッドを設定していきます。
+#「楽天APIのデータから必要なデータを絞り込む」、且つ「対応するカラムにデータを格納する」メソッドを設定
   def read(result)
     genre_code = result["booksGenreId"].slice!(0..5)
     category = Category.find_by(genre_code: genre_code)

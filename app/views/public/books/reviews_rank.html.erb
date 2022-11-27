@@ -14,7 +14,6 @@
   <h5 class="bg-secondary text-white"><b>レビューの多い本Top100</b></h5>
   <div class="row">
     <% @count_reviews.each do |review| %>
-    <!--<%# binding.pry %>-->
     <% book = Book.find(review[0]) %>
       <div class="col-md-2 mb-2 d-flex flex-column form-inline">
         <%= link_to book_path(book.id) do%>
