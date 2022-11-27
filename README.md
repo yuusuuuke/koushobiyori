@@ -1,6 +1,6 @@
 好書日和
-##使用言語・技術
-###言語
+## 使用言語・技術
+### 言語
 HTML/ruby 3.1.2
 
 ###技術
@@ -22,14 +22,14 @@ HTML/ruby 3.1.2
  AWS(EC2/RDS/Route53)
  gem(devise/dotenv/enum_help/impressionist/rails-i18n/rakuten_web_service) MySQL
  
-##設計書
-###機能一覧
+## 設計書
+### 機能一覧
 https://docs.google.com/spreadsheets/d/1Mh9bpOEyGxIRm2WY7Am3_7xRFZUmwKT3eoAmlfeFHQs/edit#gid=1091086188
 
-###テーブル定義書
+### テーブル定義書
 https://docs.google.com/spreadsheets/d/1btjQpSAnzmhXrWN5EjQRN2f8xIlxAGXn55xl3wsHjOY/edit#gid=166124504
 
-###UI_flows/ワイヤーフレーム/ER図
+### UI_flows/ワイヤーフレーム/ER図
 https://app.diagrams.net/#G1Ue2XK-5Jwve1dB8vS1V9tlGqBqPjZEQe
 
 ## サイト概要
