@@ -34,7 +34,7 @@
         </div>
         <div class="form-group-guestuser">
           <% if @user.nickname == "guestuser"%>
-            <%= link_to "ゲストユーザーを削除する", admin_user_path(@user), method: :delete, class: "btn btn-sm btn-danger" %>
+            <%= link_to "ゲストユーザーを削除する", admin_user_path(@user), method: :delete, class: "btn btn-sm btn-danger", data: {confirm: "ゲストユーザを本当に削除しますか？"} %>
           <% end %>
         </div>
       <% end %>
