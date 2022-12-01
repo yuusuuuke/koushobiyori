@@ -11,7 +11,7 @@ class Public::BooksController < ApplicationController
     end
   end
 
-  def show #commentとreviewのcontrollerでrender入れてる
+  def show # commentとreviewのcontrollerでrender入れてる
     @book = Book.find(params[:id])
     @review = Review.new
     @reviews = @book.reviews.includes(:comments).order(created_at: :desc)
