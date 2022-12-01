@@ -34,10 +34,11 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.nickname == "guestuser"
       @user.destroy
-      flash[:success] = "guestuserを削除しました"
-      redirect_to "index"
+      flash[:success] = "ゲストユーザを削除しました"
+      redirect_to admin_path
     else
-      render request.referrer
+      flash.now[:danger] = "ゲストユーザを削除できませんでした"
+      render :edit
     end
   end
 
