@@ -5,6 +5,8 @@ class Admin::CommentsController < ApplicationController
     if params[:create_latest]
       # binding.pry
       @reviews = Review.joins(:comments).group(:id).order("comments.created_at desc")
+    elsif params[:score_revel]
+      @reviews = Review.joins(:comments).group(:id).order("comments.score, comments.created_at asc")
     else
       @reviews = Review.joins(:comments).group(:id)
     end

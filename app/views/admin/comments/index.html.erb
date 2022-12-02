@@ -2,16 +2,21 @@
   <div class="row">
     <div class="col">
       <%= link_to "作成日順", admin_comments_path(create_latest: "作成日"), class: "btn btn-sm btn-warning" %>
-      <h4 class="mt-4 mb-2 bg-secondary text-white">レビュー一覧</h4>
+      <%= link_to "感情分析スコア順", admin_comments_path(score_revel: "感情分析スコア"), class: "btn btn-sm btn-success" %>
+      <h4 class="mt-4 mb-2 bg-secondary text-white">コメント一覧</h4>
       <div class="review_info card">
         <% @reviews.each do |review| %>
           <div class="card mb-1">
             <div class="card-body">
-              <button type="button" class="close" aria-label="Close">
-                <%= link_to admin_review_path(review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
-                  <span aria-hidden="true">&times;</span>
-                <% end %>
-              </button>
+              <div class="sentiment text-right">
+                <span class="sentiment-score mr-2 btn btn-sm btn-primary">感情分析スコア：<%= review.score %></span>
+                <span class="sentiment-magnitude mr-2 btn btn-sm btn-warning">感情強度スコア：<%= review.magnitude %></span>
+                <button type="button" class="close" aria-label="Close">
+                  <%= link_to admin_review_path(review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                    <span aria-hidden="true">&times;</span>
+                  <% end %>
+                </button>
+              </div>
               <div class="container">
                 <div class="row">
                   <div class="col-md-3 d-flex flex-column form-inline">
@@ -43,11 +48,15 @@
               <% review.comments.where.not(id: nil).each do |comment| %>
                 <div class="card mb-1 ml-5">
                   <div class="card-body">
-                    <button type="button" class="close" aria-label="Close">
-                      <%= link_to admin_comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
-                        <span aria-hidden="true">&times;</span>
-                      <% end %>
-                    </button>
+                    <div class="sentiment text-right">
+                      <span class="sentiment-score mr-2 btn btn-sm btn-primary">感情分析スコア：<%= comment.score %></span>
+                      <span class="sentiment-magnitude mr-2 btn btn-sm btn-warning">感情強度スコア：<%= comment.magnitude %></span>
+                      <button type="button" class="close" aria-label="Close">
+                        <%= link_to admin_comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                          <span aria-hidden="true">&times;</span>
+                        <% end %>
+                      </button>
+                    </div>
                     <div class="container">
                       <div class="row">
                         <div class="col-md-2 d-flex flex-column form-inline">
