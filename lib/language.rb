@@ -28,7 +28,7 @@ module Language
         raise error['message']
       else
         response_body['documentSentiment'].values
-        # magnitude = response_body['documentSentiment']['magnitude']
+        # →{"polarity"=>-1, "magnitude"=>2.1, "score"=>-0.7}で返ってくる
       end
     end
   end

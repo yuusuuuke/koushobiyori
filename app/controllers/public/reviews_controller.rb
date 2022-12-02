@@ -5,6 +5,8 @@ class Public::ReviewsController < ApplicationController
     @book = Book.find(params[:book_id])
     review = current_user.reviews.new(review_params)
     review.book_id = @book.id
+    review.score = Language.get_data(review_params[:comment])[2]  #google_Natural_Language_API
+    review.magnitude = Language.get_data(review_params[:comment])[1]  #google_Natural_Language_API
     if review.save
       flash[:success] = "レビューを投稿しました"
       redirect_to request.referrer
@@ -21,6 +23,8 @@ class Public::ReviewsController < ApplicationController
   def update
     @book = Book.find(params[:book_id])
     review = @book.reviews.find_by(book_id: @book.id, user_id: current_user.id)
+    review.score = Language.get_data(review_params[:comment])[2]  #google_Natural_Language_API
+    review.magnitude = Language.get_data(review_params[:comment])[1]  #google_Natural_Language_API
     if review.update(review_params)
       flash[:success] = "レビューを更新しました"
       redirect_to request.referrer

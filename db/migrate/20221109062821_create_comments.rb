@@ -6,7 +6,6 @@ class CreateComments < ActiveRecord::Migration[6.1]
       t.text :comment, null: false
       t.decimal :score, precision: 5, scale: 3
       t.decimal :magnitude, precision: 5, scale: 3
-
       t.timestamps
     end
   end
