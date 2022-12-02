@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 2022_11_21_132030) do
     t.integer "review_id"
     t.integer "user_id"
     t.text "comment", null: false
+    t.decimal "score", precision: 5, scale: 3
+    t.decimal "magnitude", precision: 5, scale: 3
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -132,6 +134,8 @@ ActiveRecord::Schema.define(version: 2022_11_21_132030) do
     t.integer "book_id"
     t.text "comment", null: false
     t.boolean "status", default: true
+    t.decimal "score", precision: 5, scale: 3
+    t.decimal "magnitude", precision: 5, scale: 3
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
