@@ -4,8 +4,9 @@ class Public::CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     @book = @comment.review.book
-    @comment.score = Language.get_data(comment_params[:comment])[2]  #google_Natural_Language_API
-    @comment.magnitude = Language.get_data(comment_params[:comment])[1]  #google_Natural_Language_API
+    data = Language.get_data(comment_params[:comment])
+    @comment.score = data[2]  #google_Natural_Language_API
+    @comment.magnitude = data[1]  #google_Natural_Language_API
     if @comment.save
       flash[:success] = "コメントしました"
       redirect_to book_path(@book)
