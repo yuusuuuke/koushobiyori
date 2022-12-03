@@ -3,16 +3,32 @@
     <div class="col">
       <%= link_to "作成日順", admin_reviews_path(create_latest: "作成日"), class: "btn btn-sm btn-warning" %>
       <%= link_to "更新日順", admin_reviews_path(update_latest: "更新日"), class: "btn btn-sm btn-primary" %>
+      <%= link_to "作成日順感情分析スコア", admin_reviews_path(created_at_score_revel: "感情分析スコア"), class: "btn btn-sm btn-danger" %>
+      <div class="score_revel text-right">
+        <b class="bg-danger text-white">スコア＜−０.３４(要確認)</b>
+        <b class="bg-warning text-white mx-3">−０.３３＜スコア＜−０.３３</b>
+        <b class="bg-primary text-white">０.３４＜スコア</b>
+      </div>
       <h4 class="mt-4 mb-2 bg-secondary text-white">レビュー一覧</h4>
       <div class="review_info card">
         <% @reviews.each do |review| %>
           <div class="card mb-1">
             <div class="card-body">
-              <button type="button" class="close" aria-label="Close">
-                <%= link_to admin_review_path(review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
-                  <span aria-hidden="true">&times;</span>
+              <div class="sentiment text-left">
+                <% if review.score <= -0.34 %>
+                  <span class="sentiment-score ml-5 bg-danger text-white"><b>感情分析スコア：<%= review.score %></b></span>
+                <% elsif review.score >= -0.33 && review.score <= 0.33%>
+                  <span class="sentiment-score ml-5 bg-warning text-white"><b>感情分析スコア：<%= review.score %></b></span>
+                <% else %>
+                  <span class="sentiment-score ml-5 bg-primary text-white"><b>感情分析スコア：<%= review.score %></b></span>
                 <% end %>
-              </button>
+                <span class="sentiment-magnitude ml-3 bg-info text-white"><b>感情強度スコア：<%= review.magnitude %></b></span>
+                <button type="button" class="close" aria-label="Close">
+                  <%= link_to admin_review_path(review.id), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                    <span aria-hidden="true">&times;</span>
+                  <% end %>
+                </button>
+              </div>
               <div class="container">
                 <div class="row">
                   <div class="col-md-3 d-flex flex-column form-inline">
@@ -44,11 +60,21 @@
               <% review.comments.where.not(id: nil).each do |comment| %>
                 <div class="card mb-1 ml-5">
                   <div class="card-body">
-                    <button type="button" class="close" aria-label="Close">
-                      <%= link_to admin_comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
-                        <span aria-hidden="true">&times;</span>
+                    <div class="sentiment text-right">
+                      <% if comment.score <= -0.34 %>
+                        <span class="sentiment-score mr-2 bg-danger text-white"><b>感情分析スコア：<%= comment.score %></b></span>
+                      <% elsif -0.33 <= comment.score && comment.score <= 0.33 %>
+                        <span class="sentiment-score mr-2 bg-warning text-white"><b>感情分析スコア：<%= comment.score %></b></span>
+                      <% else %>
+                        <span class="sentiment-score mr-2 bg-primary text-white"><b>感情分析スコア：<%= comment.score %></b></span>
                       <% end %>
-                    </button>
+                      <span class="sentiment-magnitude mr-2 bg-info text-white"><b>感情強度スコア：<%= comment.magnitude %></b></span>
+                      <button type="button" class="close" aria-label="Close">
+                        <%= link_to admin_comment_path(comment), method: :delete, data: {confirm: "本当に削除しますか?"} do %>
+                          <span aria-hidden="true">&times;</span>
+                        <% end %>
+                      </button>
+                    </div>
                     <div class="container">
                       <div class="row">
                         <div class="col-md-2 d-flex flex-column form-inline">

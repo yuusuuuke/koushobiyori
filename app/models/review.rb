@@ -9,7 +9,6 @@ class Review < ApplicationRecord
   
   scope :create_latest, -> {order(created_at: :desc)}
   scope :update_latest, -> {order(updated_at: :desc)}
-  scope :score_revel, -> {order(score, created_at: :asc)}
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
