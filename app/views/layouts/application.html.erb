@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Koushobiyori</title>
+    <!--<title><%#= content_for?(:html_title) ? yield(:html_title) : "Default" %></title>-->
+    <title><%= content_for?(:html_title) ? yield(:html_title) : "好書日和" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,7 +14,7 @@
 
   <body>
     <%= render "layouts/header" %>
-    <% flash.each do |message_type, message| %> 
+    <% flash.each do |message_type, message| %>
       <div class="text-center alert alert-<%= message_type %>">
         <%= message %>
       </div>
