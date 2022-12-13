@@ -1,0 +1,22 @@
+
+[1mFrom:[0m /home/ec2-user/environment/koushobiyori/app/controllers/public/users_controller.rb:19 Public::UsersController#show:
+
+     [1;34m5[0m:   [32mdef[0m [1;34mshow[0m
+     [1;34m6[0m:     @user = [1;34;4mUser[0m.find(params[[33m:id[0m])
+     [1;34m7[0m:     @read = @user.read_status.where([35mstatus[0m: [1;34m1[0m).order([35mcreated_at[0m: [33m:desc[0m).limit([1;34m12[0m)
+     [1;34m8[0m:     @reading = @user.read_status.where([35mstatus[0m: [1;34m2[0m).order([35mcreated_at[0m: [33m:desc[0m).limit([1;34m12[0m)
+     [1;34m9[0m:     @wish = @user.read_status.where([35mstatus[0m: [1;34m3[0m).order([35mcreated_at[0m: [33m:desc[0m).limit([1;34m12[0m)
+    [1;34m10[0m:     [1;34m# @read_all = @user.read_status.where(status: 1)[0m
+    [1;34m11[0m:     [1;34m# @reading_all = @user.read_status.where(status: 2)[0m
+    [1;34m12[0m:     [1;34m# @wish_all = @user.read_status.where(status: 3)[0m
+    [1;34m13[0m: [1;34m#下の１行にまとめ、Viewの変数の後ろにwhere足した。[0m
+    [1;34m14[0m:     @read_status = @user.read_status.all
+    [1;34m15[0m:     @reviews = @user.reviews.all.order([35mcreated_at[0m: [33m:desc[0m).limit([1;34m10[0m)
+    [1;34m16[0m:     @review_count = @reviews.group([33m:book_id[0m).count
+    [1;34m17[0m: [1;34m# 以下、タイムライン機能実装[0m
+    [1;34m18[0m:     following_user = @user.followings.all
+ => [1;34m19[0m: binding.pry
+    [1;34m20[0m:     @time_line_reviews = following_user.joins([33m:reviews[0m).order([35mcreated_at[0m: [33m:desc[0m)
+    [1;34m21[0m: [1;34m# = = =end= = =[0m
+    [1;34m22[0m:   [32mend[0m
+

@@ -28,13 +28,13 @@
                         <%= render "public/favorites/favorite", review: favorite.review, book: favorite.review.book %>
                       </div>
                     </div>
-                    <div class="row">
-                      <%= favorite.review.comment%>
+                    <div class="row", style="word-break: break-all;">
+                      <%= favorite.review.comment %>
                     </div>
                   </div>
                 </div>
               </div>
-              <% favorite.review.comments.where.not(id: nil).each do |comment| %>
+              <% favorite.review.comments.where.not(id: nil).limit(3).each do |comment| %>
                 <div class="card border-primary mb-1 ml-5">
                   <div class="card-body">
                     <% if comment.user_id == current_user.id %>
@@ -55,7 +55,7 @@
                           <div class="row border-bottom">
                             <%= comment.user.nickname %>&ensp;&ensp;&ensp;<%= l comment.created_at%>
                           </div>
-                          <div class="row">
+                          <div class="row", style="word-break: break-all;">
                             <%= comment.comment %>
                           </div>
                         </div>

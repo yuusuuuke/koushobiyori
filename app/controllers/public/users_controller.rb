@@ -14,6 +14,19 @@ class Public::UsersController < ApplicationController
     @read_status = @user.read_status.all
     @reviews = @user.reviews.all.order(created_at: :desc).limit(10)
     @review_count = @reviews.group(:book_id).count
+
+# 以下、タイムライン機能(レビューのみ)
+    @following_users = [*@user.followings.all, *@user]
+    @time_line_reviews = @following_users.map{|u| u.reviews }.flatten.sort{|r1, r2| r1.created_at <=> r2.created_at}.reverse.slice(0,30)
+# = = =end= = = = 
+# 以下、タイムライン機能(レビュー+@)
+    # @a = []
+    # @following_users.each do |user|#[a,b,c,d]
+    #   @a += user.reviews
+    #   @a += user.read_status
+    # end
+      
+# = = =end= = =
   end
 
   def edit

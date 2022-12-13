@@ -50,7 +50,7 @@
                         <p><%= l review.created_at %>&ensp;&ensp;&ensp;<%= review.favorites.count%>いいね</p>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row", style="word-break: break-all;">
                       <%= review.comment%>
                     </div>
                   </div>
@@ -85,7 +85,7 @@
                           <div class="row border-bottom">
                             <%= comment.user.nickname %>&ensp;&ensp;&ensp;<%= l comment.created_at%>
                           </div>
-                          <div class="row">
+                          <div class="row", style="word-break: break-all;">
                             <%= comment.comment %>
                           </div>
                         </div>

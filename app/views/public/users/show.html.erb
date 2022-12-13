@@ -1,7 +1,7 @@
 <!--サイドバー-->
 <div class='container'>
   <div class='row'>
-    <div class='col-md-3 mt-5'>
+    <div class='col-md-4 mt-5'>
       <div class="info d-flex flex-column">
         <div class="row">
           <%= image_tag @user.get_profile_image(100,100),class:"rounded-circle" %>
@@ -67,12 +67,45 @@
           <% end %>
         </div>
       </div>
+      
+      <h4 class="bg-secondary text-white">タイムライン</h4>
+      <div class="overflow-auto border border-secondary", style="max-height:700px;">
+        <% @time_line_reviews.each do |review| %>
+          <div class="time_line card mb-2">
+            <div class="row">
+              <div class="col-1 ml-1">
+                <%= link_to user_path(review.user.id) do %>
+                  <%= image_tag review.user.get_profile_image(40,40),class:"rounded-circle"%>
+                <% end %>
+              </div>
+              <div class="col-10 ml-3 d-flex align-items-center">
+                <%= review.user.nickname %>&ensp;&ensp;<%= l review.created_at %>
+              </div>
+            </div>
+            <div class="row mb-2 border border-top">
+              <div class="col-2 ml-2 my-1">
+                <%= link_to book_path(review.book.id) do %>
+                  <%= image_tag review.book.item_image_url, size: "60x100" %>
+                <% end %>
+              </div>
+              <div class="col-9">
+                <div classs="row">
+                  <%= review.book.title %><br>
+                </div>
+                <div classs="row">
+                  <%= review.comment %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 <!--サイドバーend-->
 <!--main-->
-    <div class="col-md-9 mt-5">
+    <div class="col-md-8 mt-5">
       <div class="container">
-        <div class="read_info card">
+        <div class="read_info card mb-3">
           <h4 class="mb-2 bg-secondary text-white">読んだ本</h4>
           <div class="row ml-2">
             <% @read.each do |read| %>
@@ -86,10 +119,10 @@
               </div>
             <% end %>
           </div>
-          <%= link_to "読んだ本一覧", "/book/#{@user.id}/read", method: :get, class:"btn btn-outline-success mb-3" %>
+          <%= link_to "読んだ本一覧", "/book/#{@user.id}/read", method: :get, class:"btn btn-outline-success" %>
         </div>
           
-        <div class="reading_info card">
+        <div class="reading_info card mb-3">
           <h4 class="mb-2 bg-secondary text-white">読んでいる本</h4>
           <div class="row ml-2">
             <% @reading.each do |read| %>
@@ -103,10 +136,10 @@
               </div>
             <% end %>
           </div>
-            <%= link_to "読んでいる本一覧", "/book/#{@user.id}/reading", method: :get, class:"btn btn-outline-success mb-3" %>
+            <%= link_to "読んでいる本一覧", "/book/#{@user.id}/reading", method: :get, class:"btn btn-outline-success" %>
         </div>
           
-        <div class="wish_info card">
+        <div class="wish_info card mb-3">
           <h4 class="mb-2 bg-secondary text-white">読みたい本</h4>
           <div class="row ml-2">
             <% @wish.each do |wish| %>
@@ -120,9 +153,10 @@
               </div>
             <% end %>
           </div>
-          <%= link_to "読みたい本一覧", "/book/#{@user.id}/wish", method: :get, class:"btn btn-outline-success mb-3" %>
+          <%= link_to "読みたい本一覧", "/book/#{@user.id}/wish", method: :get, class:"btn btn-outline-success" %>
         </div>
-        <div class="review_info card">
+<!--レビュー一覧-->
+        <div class="review_info card mb-3">
           <h4 class="mb-2 bg-secondary text-white">レビュー</h4>
           <% @reviews.each do |review| %>
             <div class="card border-success mb-1">
@@ -140,14 +174,14 @@
                       <%= link_to book_path(review.book.id) do %>
                         <%= image_tag review.book.item_image_url, size: "100x140" %>
                       <% end %>
-                      <%= review.book.title%>
+                      <%= review.book.title %>
                     </div>
                     <div class="col-md-9">
                       <div class="row border-bottom">
                         <p><%= l review.created_at %>&ensp;&ensp;&ensp;<%= review.favorites.count%>いいね</p>
                       </div>
-                      <div class="row", style="text-align:left">
-                        <%=safe_join(review.comment.split("\n"),tag(:br))%>
+                      <div class="row", style="text-align:left; word-break: break-all;">
+                        <%= safe_join(review.comment.split("\n"),tag(:br)) %>
                       </div>
                     </div>
                   </div>
@@ -173,7 +207,7 @@
                             <div class="row border-bottom">
                               <%= comment.user.nickname %>&ensp;&ensp;&ensp;<%= l comment.created_at%>
                             </div>
-                            <div class="row">
+                            <div class="row", style="word-break: break-all;">
                               <%= comment.comment %>
                             </div>
                           </div>
@@ -185,7 +219,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to "レビュー一覧", "/book/#{@user.id}/reviews", method: :get, class:"btn btn-outline-success mb-3" %>
+          <%= link_to "レビュー一覧", "/book/#{@user.id}/reviews", method: :get, class:"btn btn-outline-success" %>
         </div>
       </div>
     </div>
