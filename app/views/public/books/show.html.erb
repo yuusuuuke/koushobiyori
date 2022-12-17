@@ -62,8 +62,8 @@
               <%= form_with model:[@book, @review], url: book_reviews_path(@book), method: :post, remote: true do |f| %>
                 <div class="modal-body">
                   <div class="form_group">
-                    <%#= f.text_area :comment, class:"js-comment", size:"50x5", placeholder:"コメントする(2~200文字)" %>
-                    <!--<P class="js-comment-count pull-right text-right"></P>-->
+                    <%= f.text_area :comment, class:"js-comment", size:"50x5", placeholder:"コメントする(2~200文字)" %>
+                    <P class="js-comment-count pull-right text-right"></P>
                   </div>
                 </div>
                 <div class="modal-footer">
