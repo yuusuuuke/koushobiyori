@@ -62,8 +62,8 @@
               <%= form_with model:[@book, @review], url: book_reviews_path(@book), method: :post, remote: true do |f| %>
                 <div class="modal-body">
                   <div class="form_group">
-                    <%= f.text_area :comment, class:"js-comment", size:"50x5", placeholder:"コメントする(2~200文字)" %>
-                    <P class="js-comment-count pull-right text-right"></P>
+                    <%#= f.text_area :comment, class:"js-comment", size:"50x5", placeholder:"コメントする(2~200文字)" %>
+                    <!--<P class="js-comment-count pull-right text-right"></P>-->
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -90,8 +90,8 @@
                 <%= form_with model:@user_review, url: book_review_path(@book), method: :patch, remote: true do |f| %>
                 <div class="modal-body">
                   <div class="form_group">
-                    <%= f.text_area :comment, class:"comment", size:"50x5", class: "form_control"%>
-                    <P class="comment-count pull-right text-right"></P>
+                    <%= f.text_area :comment, size:"50x5", class: "js-comment form_control"%>
+                    <p class="js-comment-count pull-right text-right"></p>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -134,7 +134,7 @@
         </div>
 
         <h4 class="bg-secondary text-white">レビュー一覧</h4>
-        <% @reviews.each do |review| %>
+        <% @reviews.each_with_index do |review, index| %>
           <div class="card border-success mb-1">
             <div class="card-body">
               <div class="container">
@@ -187,8 +187,8 @@
                 <div class="form-group col-md-8 ml-5 mt-3">
                   <%= form_with model: review.comments.build, url: comments_path, method: :post, remote: true do |f| %>
                     <%#= hidden_field_tag :review_id, review.id %>
-                    <%= f.hidden_field :review_id, value: review.id %>
-                    <%= f.text_area :comment, class:"js-comment", size:"60x2", placeholder: "コメントする(2~200文字まで)" %><br>
+                    <%= f.hidden_field :review_id, value: review.id, id: "review_#{review.id}" %>
+                    <%= f.text_area :comment, class:"js-comment", id: "comment_#{index}", size:"60x2", placeholder: "コメントする(2~200文字まで)" %><br>
                     <P class="js-comment-count pull-right text-right"></P>
                     <%= f.submit "コメントする", class:"btn btn-primary" %>
                   <% end %>
