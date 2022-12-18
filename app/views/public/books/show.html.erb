@@ -62,8 +62,8 @@
               <%= form_with model:[@book, @review], url: book_reviews_path(@book), method: :post, remote: true do |f| %>
                 <div class="modal-body">
                   <div class="form_group">
-                    <%= f.text_area :comment, class:"js-comment", size:"50x5", placeholder:"コメントする(2~200文字)" %>
-                    <P class="js-comment-count pull-right text-right"></P>
+                    <%= f.text_area :comment, class:"js-edit-comment", size:"50x5", placeholder:"コメントする(2~200文字)" %>
+                    <P class="js-edit-comment-count pull-right text-right"></P>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -90,8 +90,8 @@
                 <%= form_with model:@user_review, url: book_review_path(@book), method: :patch, remote: true do |f| %>
                 <div class="modal-body">
                   <div class="form_group">
-                    <%= f.text_area :comment, size:"50x5", class: "js-comment form_control"%>
-                    <p class="js-comment-count pull-right text-right"></p>
+                    <%= f.text_area :comment, size:"50x5", class: "js-edit-comment form_control", id: "current_user_review"%>
+                    <p class="js-edit-comment-count pull-right text-right"></p>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -193,7 +193,7 @@
                     <%= f.submit "コメントする", class:"btn btn-primary" %>
                   <% end %>
                 </div>
-            </div>
+              </div>
             </div>
           </div>
         <% end %>
